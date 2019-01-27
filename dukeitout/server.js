@@ -12,20 +12,37 @@ const connection =  mysql.createConnection(
       database: "dukeitout",
       port: 3306});
 
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
-
-  console.log('connected as id ' + connection.threadId);
-});
+// connection.connect(function(err) {
+//   if (err) {
+//     console.error('error connecting: ' + err.stack);
+//     return;
+//   }
+//
+//   console.log('connected as id ' + connection.threadId);
+// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Homepage
 app.get('/', function(req, res){
-  res.send('<h1>Hello world</h1>');
+    res.send('<a href="/chat/1">Go to Chat</a>'); //TODO: Implement actual browsing dashboard
+});
+
+app.get('/signup', function(req, res){
+    res.send('<h1>Signup</h1>');
+});
+
+app.get('/login', function(req, res){
+    res.send('<h1>Login</h1>');
+});
+
+app.get('/chat/:id', function(req, res){
+    res.send(req.params.id); // TODO: Implement actual chat
+});
+
+app.get('/profile/:id', function(req, res){
+    res.send(req.params.id); // TODO: Implement user profile (if time)
 });
 
 // io.on('connection', function(socket){
@@ -34,16 +51,5 @@ app.get('/', function(req, res){
 //     console.log('user disconnected');
 //   });
 // });
-
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
-});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
