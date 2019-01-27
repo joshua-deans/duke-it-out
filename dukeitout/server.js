@@ -9,7 +9,7 @@ const connection =  mysql.createConnection(
     {host: "duke-it-out-mysqldbserver.mysql.database.azure.com",
       user: "mysqldbuser@duke-it-out-mysqldbserver",
       password: "nwHacks2019",
-      database: {your_database},
+      database: "dukeitout",
       port: 3306});
 
 connection.connect(function(err) {
