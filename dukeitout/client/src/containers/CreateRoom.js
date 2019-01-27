@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
+import Routes from "../routes";
+import { Link } from "react-router-dom";
 
 class CreateRoom extends Component {
     render() {
@@ -13,7 +15,7 @@ class CreateRoom extends Component {
                                 <Label for="roomName">Room Name</Label>
                                 <Input type="text" name="roomName" id="roomName" placeholder="Room Name" />
                             </FormGroup>
-                            <Button>Submit</Button>
+                            <Button><Link to="/Room">Submit</Link></Button>
                         </Form>
                     </Col>
 

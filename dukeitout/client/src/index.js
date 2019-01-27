@@ -5,8 +5,13 @@ import App from "./containers/App";
 import CreateRoom from './containers/CreateRoom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import { BrowserRouter as Router } from "react-router-dom";
 
-ReactDOM.render(<CreateRoom />, document.getElementById('root'));
+ReactDOM.render(
+    <Router>
+        <CreateRoom />
+    </Router>, 
+    document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
