@@ -2,10 +2,11 @@
   "name": "dukeitout",
   "version": "1.0.0",
   "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
     "client": "cd client && yarn start",
     "server": "node server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node server.js"
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "engines": {
     "node": ">=10.0.0",
