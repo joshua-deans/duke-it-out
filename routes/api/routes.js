@@ -4,8 +4,8 @@ var router = express.Router();
 const mysql = require('mysql');
 
 const connection =  mysql.createConnection(
-    {host: "duke-it-out-mysqldbserver.mysql.database.azure.com",
-        user: "mysqldbuser@duke-it-out-mysqldbserver",
+    {host: "duke-it-out-mysql.mysql.database.azure.com",
+        user: "mysqldbadmin@duke-it-out-mysql",
         password: "nwHacks2019",
         database: "dukeitout",
         port: 3306});
@@ -15,8 +15,9 @@ const connection =  mysql.createConnection(
 // Chat API
 router.get('/chat', function(req, res){
     // Returns all chat data (probably minus "expensive data")
+    // res.send("Hi");
     connection.query('SELECT * FROM Chat', function (error, results, fields) {
-        if (error) return null;
+        if (error) res.send(null);
         res.send(results);
     });
 });
@@ -77,7 +78,7 @@ router.put('/user', function(req, res){
 router.get('/message', function(req, res){
     // Returns all user data (probably minus "expensive data")
     connection.query('SELECT * FROM Message', function (error, results, fields) {
-        if (error) return null;
+        if (error) res.send(null);
         res.send(results);
     });
 });
