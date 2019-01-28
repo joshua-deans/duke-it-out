@@ -10,8 +10,8 @@ const routes = require('./routes/api/routes');
 
 const mysql = require('mysql');
 const connection =  mysql.createConnection(
-    {host: "duke-it-out-mysqldbserver.mysql.database.azure.com",
-      user: "mysqldbuser@duke-it-out-mysqldbserver",
+    {host: "duke-it-out-mysql.mysql.database.azure.com",
+      user: "mysqldbadmin@duke-it-out-mysql",
       password: "nwHacks2019",
       database: "dukeitout",
       port: 3306});
