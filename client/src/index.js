@@ -5,6 +5,8 @@ import App from "./containers/App";
 import CreateRoom from './containers/CreateRoom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import Popper from 'popper.js';
+import $ from 'jquery';
 
 ReactDOM.render(<CreateRoom />, document.getElementById('root'));
 
