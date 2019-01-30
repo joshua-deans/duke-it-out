@@ -48,6 +48,14 @@ router.put('/chat/:name', function(req, res){
     });
 });
 
+router.get('/chat/:id/users', function(req, res){
+    // Returns users in the chat
+    connection.query('SELECT * FROM User WHERE currentChat=?' + req.params.id, function (error, results, fields) {
+        if (error) res.send(null);
+        res.send(results);
+    });
+});
+
 // User API
 router.get('/user', function(req, res){
     // Returns all user data (probably minus "expensive data")
@@ -59,7 +67,7 @@ router.get('/user', function(req, res){
 
 router.get('/user/:id', function(req, res){
     // Returns user data by ID
-    connection.query('SELECT * FROM Chat WHERE id=' + req.params.id, function (error, results, fields) {
+    connection.query('SELECT * FROM User WHERE id=' + req.params.id, function (error, results, fields) {
         if (error) res.send(null);
         res.send(results);
     });
