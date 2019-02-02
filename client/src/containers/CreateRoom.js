@@ -7,7 +7,7 @@ class CreateRoom extends Component {
 			border: '1px solid #e6e6e6',
 			boxShadow: '5px 4px #b3b3b3',
 			padding: '20px 70px 20px 70px',
-			width: '40vh',
+			width: '40vw',
 			marginTop: '30vh'
 		}
 
@@ -23,7 +23,6 @@ class CreateRoom extends Component {
 					</form>
 				</div>
 			</div>
-
     )
   }
 }
