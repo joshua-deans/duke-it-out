@@ -27,9 +27,7 @@ router.get('/user/:id', userController.getUserById);
 
 // Returns all user data
 router.get('/user', userController.getAllUsers)
-    .post('/user', function(req, res){
-    // TODO: Update code when user creation is finished
-})
+    .post('/user', userController.createAUser)
     .put('/user', function(req, res){
     // TODO: Update code
 });

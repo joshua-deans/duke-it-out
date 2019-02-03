@@ -17,3 +17,8 @@ exports.getAllUsers = function(req, res){
         res.send(results);
     });
 };
+
+exports.createAUser = function(req, res){
+    // Returns all user data (probably minus "expensive data")
+    console.log(req.body.username);
+};
