@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
 
-class CreateRoom extends Component {
+class Login extends Component {
     render() {
-
         let formStyle = {
-            border: '1px solid #e6e6e6',
-            boxShadow: '5px 4px #b3b3b3',
-            padding: '20px 70px 20px 70px',
-            width: '40vw',
-            height: '40vh',
-            marginTop: '20vh'
+            boxShadow: '5px 4px 5px #b3b3b3',
+            padding: '20px 70px',
+            width: '40vw', height: '50vh',
+            minHeight: '200px', minWidth: '400px',
+            overflowY: 'auto',
+            position: 'absolute',
+            left:'0', right:'0', top:'0', bottom:'0',
+            margin:'auto'
         };
 
         return(
-            <div className="d-flex justify-content-center">
-                <form style={formStyle} >
-                    <div class="form-group">
-                        <h4>Log In</h4>
-                        <input type="text" class="form-control" id="roomName" placeholder="Room Name" />
-                    </div>
-                    <button type="submit"class="btn btn-primary">Start</button>
-                </form>
-            </div>
+            <form className="card" style={formStyle} >
+                <h4 className="p-3">Log In</h4>
+                <div className="form-group">
+                    <input type="text" className="form-control" id="email" name="username"
+                           placeholder="E-mail Address"/>
+                </div>
+                <div className="form-group">
+                    <input type="text" className="form-control pb-2" id="password" name="password" placeholder="Password" />
+                </div>
+                <button type="submit"className="btn btn-primary align-text-bottom mw-25 mx-auto">Start</button>
+            </form>
         )
     }
 }
 
-export default CreateRoom;
+export default Login;
