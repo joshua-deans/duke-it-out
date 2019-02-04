@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node server.js",
+    "start": "npm run build-client && node server",
     "client": "cd client && yarn start",
     "server": "node server.js",
+    "build-client": "cd client && npm run build && cd ..",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "engines": {
