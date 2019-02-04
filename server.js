@@ -7,15 +7,7 @@ const io = require('socket.io')(http);
 
 const port = process.env.PORT || 5000;
 
-const routes = require('./routes/api/routes');
-
-const mysql = require('mysql');
-const connection =  mysql.createConnection(
-    {host: "duke-it-out-mysql.mysql.database.azure.com",
-      user: "mysqldbadmin@duke-it-out-mysql",
-      password: "nwHacks2019",
-      database: "dukeitout",
-      port: 3306});
+const routes = require('./api/routes/routes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
