@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router'
 
 class Signup extends Component {
     constructor(props) {
@@ -10,13 +11,17 @@ class Signup extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(JSON.stringify(this.state));
         fetch("http://localhost:5000/api/user",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(this.state)})
             .then(function(res) {
-                console.log(res.json());
+                if (res.ok){
+                    window.location = "/login";
+                }
+                else {
+                    document.location.reload(true)
+                }
             }).catch(function(error) {
             console.log(error);
         });
@@ -24,7 +29,6 @@ class Signup extends Component {
 
     handleChange(event) {
         this.state[event.target.name] = event.target.value;
-        // console.log(this.state);
     }
 
     render() {
@@ -52,13 +56,13 @@ class Signup extends Component {
                 </div>
                 <div className="form-group">
                     <input type="password" className="form-control" id="password" name="password" placeholder="Password"
-                           onChange={this.handleChange}/>
+                           onChange={this.handleChange} minLength={6}/>
                 </div>
                 {/*<div className="form-group">*/}
                     {/*<input type="password" className="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password"*/}
                            {/*onChange={this.handleChange}/>*/}
                 {/*</div>*/}
-                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mx-auto">Start</button>
+                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
             </form>
         )
     }
