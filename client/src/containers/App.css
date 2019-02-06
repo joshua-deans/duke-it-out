@@ -12,3 +12,12 @@ html, body, #root, #root>div {
   flex-grow : 1;
 }
 
+.formStyle {
+  box-shadow: 5px 4px 5px #b3b3b3;
+  padding: 20px 60px;
+  overflow-y: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
