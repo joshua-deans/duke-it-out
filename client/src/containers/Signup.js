@@ -14,7 +14,7 @@ class Signup extends Component {
         };
 
         return(
-            <form className="card" style={formStyle} >
+            <form className="card container-body" style={formStyle} >
                 <h4 className="p-3">Sign Up</h4>
                 <div className="form-group">
                     <input type="text" className="form-control" id="username" name="username" placeholder="Username"/>

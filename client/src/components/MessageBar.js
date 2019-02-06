@@ -2,16 +2,18 @@ import React from 'react';
 import { isAbsolute } from 'path';
 
 const MessageBar = () => {
-
   const msgBarStyle = {
-    width: '100%',
-    height: '35px',
-  }
-
-
+    // height: '35px',
+  };
 
   return (
-      <input style={msgBarStyle} type="text" placeholder="write a message"/>
+      <div className="msgInputStyle input-group">
+        <input className="form-control" style={msgBarStyle} type="text" placeholder="Write a message"
+               aria-label="Write a message" aria-describedby="send-msg-btn"/>
+        <div className="input-group-append">
+          <button className="btn btn-outline-secondary btn-info" type="button" id="send-msg-btn">Send</button>
+        </div>
+      </div>
   )
 }
 
