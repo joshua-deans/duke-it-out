@@ -3,19 +3,31 @@ import UserList from '../components/UserList';
 import Header from '../components/Header';
 import './ChatRoom.css';
 import MessageBar from '../components/MessageBar';
+import io from 'socket.io-client';
+var socket;
 
 class ChatRoom extends Component {
-
-	state = {
-		roomName: "Raptors vs Bulls",
-		leftTeam: {
-			title: "Raptors",
-			members: ["John", "Andrew", "Bob"]}
+	constructor(props){
+		super(props);
+		this.state = {
+			roomName: "Raptors vs Bulls",
+			leftTeam: {
+				title: "Raptors",
+				members: ["John", "Andrew", "Bob"]}
 			,
-		rightTeam: {
-			title: "Bulls",
-			members: ["Andy", "Kyle"]}
-	};
+			rightTeam: {
+				title: "Bulls",
+				members: ["Andy", "Kyle"]}
+		};
+	}
+
+	componentDidMount() {
+		socket = io();
+	}
+
+	componentWillUnmount() {
+		socket.disconnect();
+	}
 
 	render () {
 		return (

@@ -9,7 +9,7 @@ class Signup extends Component {
 
         return(
             <div className="container-body mx-auto">
-            <form className="card formStyle" style={signupFormStyle} >
+            <form className="card formStyle shadow" style={signupFormStyle} >
                 <h4 className="p-3">Sign Up</h4>
                 <div className="form-group">
                     <input type="text" className="form-control" id="username" name="username" placeholder="Username"/>

@@ -9,7 +9,7 @@ class Login extends Component {
 
         return(
             <div className="container-body mx-auto">
-            <form className="card formStyle" style={loginFormStyle} >
+            <form className="card formStyle shadow" style={loginFormStyle} >
                 <h4 className="p-3">Log In</h4>
                 <div className="form-group">
                     <input type="text" className="form-control" id="email" name="username"
