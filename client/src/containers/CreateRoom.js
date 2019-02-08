@@ -14,7 +14,7 @@ class CreateRoom extends Component {
         };
 
         return(
-            <form className="card" style={formStyle} >
+            <form className="card container-body" style={formStyle} >
                 <h4 className="p-3">Make Your Room</h4>
                 <div className="form-group">
                     <input type="text" className="form-control card-text" id="roomName" placeholder="Room Name" />
