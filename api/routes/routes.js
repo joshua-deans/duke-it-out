@@ -26,11 +26,9 @@ router.get('/chat/:id/users', chatController.usersInChat);
 router.get('/user/:id', userController.getUserById);
 
 // Returns all user data
-router.get('/user', userController.getAllUsers)
-    .post('/user', userController.createAUser)
-    .put('/user', function(req, res){
-    // TODO: Update code
-});
+router.get('/user', userController.getAllUsers);
+router.post('/user/create', userController.createUser);
+router.post('/user/login', userController.loginUser);
 
 // Message API
 // Returns message data by ID

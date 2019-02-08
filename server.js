@@ -18,14 +18,14 @@ app.use(cors());
 
 app.use('/api', routes);
 
-passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'passwd'
-    },
-    function(username, password, done) {
-        // ...
-    }
-));
+// passport.use(new LocalStrategy({
+//         usernameField: 'email',
+//         passwordField: 'passwd'
+//     },
+//     function(username, password, done) {
+//         // ...
+//     }
+// ));
 
 if (process.env.NODE_ENV === 'production') {
 // Set static folder

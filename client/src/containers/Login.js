@@ -10,7 +10,17 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state);
+        fetch("http://localhost:5000/api/user/login",
+            {method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(this.state)})
+            .then(function(res) {
+                return res.json();
+            }).then(function(data) {
+                console.log(data);
+            }).catch(function(error) {
+                console.log(error);
+            });
     }
 
     handleChange(event) {
@@ -25,18 +35,18 @@ class Login extends Component {
 
         return(
             <div className="container-body mx-auto">
-            <form className="card formStyle" style={loginFormStyle} onSubmit={this.handleSubmit} >
-                <h4 className="p-3">Log In</h4>
-                <div className="form-group">
-                    <input type="email" className="form-control" id="email" name="email"
-                           placeholder="E-mail Address" onChange={this.handleChange}/>
-                </div>
-                <div className="form-group">
-                    <input type="password" className="form-control pb-2" id="password" name="password" placeholder="Password"
-                           onChange={this.handleChange} minLength={6}/>
-                </div>
-                <button type="submit"className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
-            </form>
+                <form className="card formStyle" style={loginFormStyle} onSubmit={this.handleSubmit} >
+                    <h4 className="p-3">Log In</h4>
+                    <div className="form-group">
+                        <input type="email" className="form-control" id="email" name="email"
+                               placeholder="E-mail Address" onChange={this.handleChange}/>
+                    </div>
+                    <div className="form-group">
+                        <input type="password" className="form-control pb-2" id="password" name="password" placeholder="Password"
+                               onChange={this.handleChange} minLength={6}/>
+                    </div>
+                    <button type="submit"className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
+                </form>
             </div>
         )
     }
