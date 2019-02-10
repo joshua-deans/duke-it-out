@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const config = require('../../config');
+const config = require('../../config').dbconfig;
 const connection =  mysql.createConnection(config);
 
 exports.getMessageById = function(req, res){
