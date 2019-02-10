@@ -15,9 +15,15 @@ class Login extends Component {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(this.state)})
             .then(function(res) {
-                return res.json();
+                if (!res.ok){
+                    document.location.reload(true);
+                }
+                else {
+                    return res.json();
+                }
             }).then(function(data) {
                 console.log(data);
+                window.location = "/";
             }).catch(function(error) {
                 console.log(error);
             });

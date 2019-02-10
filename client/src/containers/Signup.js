@@ -16,13 +16,17 @@ class Signup extends Component {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(this.state)})
             .then(function(res) {
-                if (res.ok){
-                    window.location = "/login";
+                if (!res.ok){
+                    document.location.reload(true);
                 }
                 else {
-                    document.location.reload(true)
+                    return res.json();
                 }
-            }).catch(function(error) {
+            }).then(function(data) {
+            console.log(data);
+            window.location = "/";
+            })
+            .catch(function(error) {
             console.log(error);
         });
     }

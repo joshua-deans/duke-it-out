@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
@@ -19,15 +17,6 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use('/api', routes);
-
-// passport.use(new LocalStrategy({
-//         usernameField: 'email',
-//         passwordField: 'passwd'
-//     },
-//     function(username, password, done) {
-//         // ...
-//     }
-// ));
 
 if (process.env.NODE_ENV === 'production') {
 // Set static folder

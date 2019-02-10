@@ -33,7 +33,12 @@ exports.createUser = (req, res) => {
                 res.status(500).send(err);
             }
             else {
-                res.status(200).send({"id": results.insertId});
+                var user = {id: results.insertId, email: req.body.email, username: req.body.username};
+                jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
+                    res.cookie('token', token, { httpOnly: true });
+                    user.token = token;
+                    res.status(200).send(user);
+                });
             }
         });
 };
@@ -56,7 +61,9 @@ exports.loginUser = (req, res) => {
                 else {
                     var user = {id: results[0].id, email: results[0].email, username: results[0].username};
                     jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
-                        res.status(200).cookie('token', token, { httpOnly: true });
+                        res.cookie('token', token, { httpOnly: true });
+                        user.token = token;
+                        res.status(200).send(user);
                     });
                 }
             }

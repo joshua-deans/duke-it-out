@@ -14,7 +14,9 @@ const checkAuth = function(req, res, next) {
             if (err) {
                 res.status(401).send('Unauthorized: Invalid token');
             } else {
-                req.user = {}
+                req.user = {};
+                req.user.id = decoded.id;
+                req.user.username = decoded.username;
                 req.user.email = decoded.email;
                 next();
             }
