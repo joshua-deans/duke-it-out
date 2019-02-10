@@ -1,7 +1,10 @@
 const mysql = require('mysql');
-const config = require('../../config');
+const config = require('../../config').dbconfig;
+const secret = require('../../config').secret;
 const connection =  mysql.createConnection(config);
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const jwtExpress = require('express-jwt');
 
 exports.getUserById = (req, res) => {
     // Returns user data by ID
@@ -51,7 +54,10 @@ exports.loginUser = (req, res) => {
                     res.status(404).send(JSON.stringify({"message": "E-mail and password do not match!"}));
                 }
                 else {
-                    res.status(200).send(JSON.stringify({"id": results[0].id}));
+                    var user = {id: results[0].id, email: results[0].email, username: results[0].username};
+                    jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
+                        res.status(200).cookie('token', token, { httpOnly: true });
+                    });
                 }
             }
         });
