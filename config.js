@@ -1,7 +1,7 @@
-config = {host: "duke-it-out-mysql.mysql.database.azure.com",
+exports.dbconfig = {host: "duke-it-out-mysql.mysql.database.azure.com",
         user: "mysqldbadmin@duke-it-out-mysql",
         password: "nwHacks2019",
         database: "dukeitout",
         port: 3306};
 
-module.exports = config;
+exports.secret = "43155123DukeItOut4134t412345feanvaoijaefaoeiref"
