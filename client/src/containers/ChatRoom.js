@@ -12,7 +12,7 @@ class ChatRoom extends Component {
 		super(props);
 		socket = io();
 		socket.on('verified message', (msg, date) => {
-			this.setState({messageList: [...this.state.messageList, msg]});
+			this.setState({messageList: [...this.state.messageList, {body: msg, date: date}]});
 		});
 		this.state = {
 			roomName: "Raptors vs Bulls",
@@ -51,8 +51,9 @@ class ChatRoom extends Component {
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
 						<div id="msgBox" className="msgBoxStyle">
+							<Message body="This is a test" date={ new Date() } />
 							{this.state.messageList.map((message, index) => (
-							<Message content={ message } />
+							<Message body={ message.body } date={ message.date } />
 							))}
 						</div>
 						<MessageInput value={this.state.message} onSubmitEvent={this.sendMessage} onChangeValue={this.handleChangeMessage}/>
