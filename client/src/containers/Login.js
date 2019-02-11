@@ -41,7 +41,7 @@ class Login extends Component {
 
         return(
             <div className="container-body mx-auto">
-                <form className="card formStyle" style={loginFormStyle} onSubmit={this.handleSubmit} >
+                <form className="card formStyle shadow" style={loginFormStyle} onSubmit={this.handleSubmit} >
                     <h4 className="p-3">Log In</h4>
                     <div className="form-group">
                         <input type="email" className="form-control" id="email" name="email"
