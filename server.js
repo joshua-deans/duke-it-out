@@ -6,7 +6,6 @@ const cors = require('cors');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-// const cors = require('cors');
 
 const port = process.env.PORT || 5000;
 
@@ -37,8 +36,11 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-io.on('connection', socket => {
+io.on('connection', (socket) => {
   console.log('A user connected');
+  socket.on('sent message', (msg, date) => {
+     socket.emit('verified message', msg, new Date(date));
+  });
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });

@@ -9,21 +9,30 @@ var socket;
 class ChatRoom extends Component {
 	constructor(props){
 		super(props);
+		socket = io();
+		socket.on('verified message', (msg, date) => {
+			let msgBox = document.getElementById('msgBox');
+			msgBox.innerHTML +='<div><p>'+msg+'</p><p>'+date+'</p></div>';
+		});
 		this.state = {
 			roomName: "Raptors vs Bulls",
 			leftTeam: {
 				title: "Raptors",
-				members: ["John", "Andrew", "Bob"]}
-			,
+				members: ["John", "Andrew", "Bob"]},
 			rightTeam: {
 				title: "Bulls",
-				members: ["Andy", "Kyle"]}
+				members: ["Andy", "Kyle"]},
+			message: ''
 		};
 	}
 
-	componentDidMount() {
-		socket = io();
-	}
+	sendMessage = (event) => {
+		event.preventDefault();
+		socket.emit('sent message', this.state.message, new Date(Date.now()));
+		this.setState({message: ''});
+	};
+
+	handleChangeMessage = event => this.setState({message: event.target.value});
 
 	componentWillUnmount() {
 		socket.disconnect();
@@ -39,9 +48,9 @@ class ChatRoom extends Component {
 					</div>
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
-						<div className="msgBoxStyle">
+						<div id="msgBox" className="msgBoxStyle">
 						</div>
-						<MessageBar/>
+						<MessageBar value={this.state.message} onSubmitEvent={this.sendMessage} onChangeValue={this.handleChangeMessage}/>
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
