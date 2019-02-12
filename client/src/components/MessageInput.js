@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { isAbsolute } from 'path';
 
-class MessageBar extends Component {
+class MessageInput extends Component {
   constructor(props){
       super(props);
   }
@@ -18,4 +18,4 @@ class MessageBar extends Component {
   }
 }
 
-export default MessageBar;
+export default MessageInput;

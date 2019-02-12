@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import UserList from '../components/UserList';
 import Header from '../components/Header';
 import './ChatRoom.css';
-import MessageBar from '../components/MessageBar';
+import MessageInput from '../components/MessageInput';
 import io from 'socket.io-client';
+import Message from "../components/Message";
 var socket;
 
 class ChatRoom extends Component {
@@ -11,8 +12,7 @@ class ChatRoom extends Component {
 		super(props);
 		socket = io();
 		socket.on('verified message', (msg, date) => {
-			let msgBox = document.getElementById('msgBox');
-			msgBox.innerHTML +='<div><p>'+msg+'</p><p>'+date+'</p></div>';
+			this.setState({messageList: [...this.state.messageList, {body: msg, date: date}]});
 		});
 		this.state = {
 			roomName: "Raptors vs Bulls",
@@ -22,7 +22,8 @@ class ChatRoom extends Component {
 			rightTeam: {
 				title: "Bulls",
 				members: ["Andy", "Kyle"]},
-			message: ''
+			message: '',
+			messageList: []
 		};
 	}
 
@@ -39,6 +40,7 @@ class ChatRoom extends Component {
 	}
 
 	render () {
+		var messages = this.state.messageList;
 		return (
 			<div className="container-body">
 				<div className="d-flex justify-content-center h-100">
@@ -49,8 +51,12 @@ class ChatRoom extends Component {
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
 						<div id="msgBox" className="msgBoxStyle">
+							<Message body="This is a test" date={ new Date() } />
+							{this.state.messageList.map((message, index) => (
+							<Message body={ message.body } date={ message.date } />
+							))}
 						</div>
-						<MessageBar value={this.state.message} onSubmitEvent={this.sendMessage} onChangeValue={this.handleChangeMessage}/>
+						<MessageInput value={this.state.message} onSubmitEvent={this.sendMessage} onChangeValue={this.handleChangeMessage}/>
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>

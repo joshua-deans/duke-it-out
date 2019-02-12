@@ -39,6 +39,8 @@ if (process.env.NODE_ENV === 'production') {
 io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('sent message', (msg, date) => {
+      console.log(msg);
+      console.log(date);
      socket.emit('verified message', msg, new Date(date));
   });
   socket.on('disconnect', () => {
