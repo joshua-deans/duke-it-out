@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const messageController = require('../controllers/messageController');
 const chatController = require('../controllers/chatController');
+const authMiddleware = require('../../authMiddleware');
 
 // API Code
 
@@ -22,8 +23,9 @@ router.put('/chat/:name', chatController.modifyAChat);
 router.get('/chat/:id/users', chatController.usersInChat);
 
 // User API
-// Returns user data by ID
-router.get('/user/:id', userController.getUserById);
+// Returns user data
+router.get('/user/id/:id', userController.getUserById);
+router.get('/user/email/:email', userController.getUserByEmail);
 
 // Returns all user data
 router.get('/user', userController.getAllUsers);
