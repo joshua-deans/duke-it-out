@@ -35,8 +35,7 @@ class Login extends Component {
 
     render() {
         let loginFormStyle = {
-            width: '50vw',
-            height: '50vh'
+            width: '50vw'
         };
 
         return(
@@ -51,7 +50,7 @@ class Login extends Component {
                         <input type="password" className="form-control pb-2" id="password" name="password" placeholder="Password"
                                onChange={this.handleChange} minLength={6}/>
                     </div>
-                    <button type="submit"className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
+                    <button type="submit"className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Submit</button>
                 </form>
             </div>
         )

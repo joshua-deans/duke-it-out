@@ -14,10 +14,11 @@ html, body, #root, #root>div {
 }
 
 .formStyle {
-  padding: 20px 60px;
+  padding: 20px 40px;
   overflow-y: auto;
   position: relative;
   top: 50%;
+  height: fit-content;
   transform: translateY(-50%);
 }
 

@@ -37,8 +37,7 @@ class Signup extends Component {
 
     render() {
         let signupFormStyle = {
-            width: '50vw',
-            height: '67vh'
+            width: '50vw'
         };
 
         return(
@@ -61,7 +60,7 @@ class Signup extends Component {
                     {/*<input type="password" className="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password"*/}
                            {/*onChange={this.handleChange}/>*/}
                 {/*</div>*/}
-                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
+                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Submit</button>
             </form>
             </div>
         )
