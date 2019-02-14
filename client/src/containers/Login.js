@@ -13,13 +13,14 @@ class Login extends Component {
         fetch("http://localhost:5000/api/user/login",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
                 body: JSON.stringify(this.state)})
             .then(function(res) {
                 if (!res.ok){
                     document.location.reload(true);
                 }
                 else {
-                    return res.json();
+                    return res;
                 }
             }).then(function(data) {
                 console.log(data);

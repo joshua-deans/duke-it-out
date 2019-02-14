@@ -14,6 +14,7 @@ class Signup extends Component {
         fetch("http://localhost:5000/api/user/create",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
                 body: JSON.stringify(this.state)})
             .then(function(res) {
                 if (!res.ok){
@@ -23,8 +24,8 @@ class Signup extends Component {
                     return res.json();
                 }
             }).then(function(data) {
-            console.log(data);
-            window.location = "/";
+                console.log(data);
+                window.location = "/";
             })
             .catch(function(error) {
             console.log(error);

@@ -8,8 +8,23 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 class App extends Component {
-  state = {
-  };
+  constructor(props){
+    super(props);
+    this.getCredentials();
+  }
+
+  getCredentials() {
+    fetch("http://localhost:5000/api/auth", {
+      credentials: 'include'})
+        .then(function(res) {
+          return res;
+        }).then(function(data) {
+          console.log(data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+  }
 
   render() {
     return (
