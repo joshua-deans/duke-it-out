@@ -17,7 +17,8 @@ exports.createUser = (req, res) => {
             }
             else {
                 var user = {id: results.insertId, email: req.body.email, username: req.body.username};
-                jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
+                jwt.sign(user, secret, { expiresIn: '3h' }, (err, token) => {
+                    if (err) console.log(err);
                     res.cookie('token', token, { httpOnly: false });
                     user.token = token;
                     res.status(200).end();
@@ -28,7 +29,6 @@ exports.createUser = (req, res) => {
 
 exports.loginUser = (req, res) => {
     // returns true if user is created, false if user is not created.
-    console.log(req);
     connection.query('SELECT * FROM User WHERE email=?',
         req.body.email,
         (err, results, fields) => {
@@ -44,7 +44,8 @@ exports.loginUser = (req, res) => {
                 }
                 else {
                     var user = {id: results[0].id, email: results[0].email, username: results[0].username};
-                    jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
+                    jwt.sign(user, secret, { expiresIn: '3h' }, (err, token) => {
+                        if (err) console.log(err);
                         res.cookie('token', token, { httpOnly: false });
                         user.token = token;
                         res.status(200).end();

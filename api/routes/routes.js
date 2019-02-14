@@ -35,7 +35,7 @@ router.post('/user/create', authController.createUser);
 router.post('/user/login', authController.loginUser);
 
 router.get('/auth', authMiddleware, function(req, res){
-    res.send(JSON.stringify(req.user));
+    res.json(req.user);
 });
 
 // Message API

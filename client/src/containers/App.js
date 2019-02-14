@@ -17,7 +17,7 @@ class App extends Component {
     fetch("http://localhost:5000/api/auth", {
       credentials: 'include'})
         .then(function(res) {
-          return res;
+          return res.json();
         }).then(function(data) {
           console.log(data);
         })

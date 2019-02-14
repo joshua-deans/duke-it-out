@@ -21,7 +21,7 @@ class Signup extends Component {
                     document.location.reload(true);
                 }
                 else {
-                    return res.json();
+                    return res;
                 }
             }).then(function(data) {
                 console.log(data);

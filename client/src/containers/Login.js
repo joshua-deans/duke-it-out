@@ -20,7 +20,7 @@ class Login extends Component {
                     document.location.reload(true);
                 }
                 else {
-                    return res;
+                    return res
                 }
             }).then(function(data) {
                 console.log(data);
