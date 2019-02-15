@@ -38,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 
 io.on('connection', (socket) => {
   console.log('A user connected');
+  socket.on('error', err => console.log(err));
   socket.on('sent message', (msg, date) => {
       console.log(msg);
       console.log(date);

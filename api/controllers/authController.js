@@ -39,7 +39,7 @@ exports.loginUser = (req, res) => {
                 if (results.length > 1 || results.length <= 0){
                     res.status(404).send(JSON.stringify({"message": "E-mail not found"}));
                 }
-                if (!bcrypt.compareSync(req.body.password, results[0].hashedPassword)){
+                else if (!bcrypt.compareSync(req.body.password, results[0].hashedPassword)){
                     res.status(404).send(JSON.stringify({"message": "E-mail and password do not match!"}));
                 }
                 else {
