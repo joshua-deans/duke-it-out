@@ -1,0 +1,17 @@
+.msgInputStyle {
+    text-align: left;
+}
+
+.msgContainerStyle {
+    text-align: left;
+    padding: 8px 16px;
+    max-width: 50%;
+    width: fit-content;
+    min-width: 25%;
+    font-size: 14px;
+    border-radius: 15px;
+}
+
+.msgBodyStyle {
+    text-align: left;
+}
