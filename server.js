@@ -29,15 +29,16 @@ app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {
 // Set static folder
-    app.use(express.static(path.join(__dirname, 'build')));
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-    app.get('*', (req, res) => {
+    app.get('/*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
 
 io.on('connection', (socket) => {
   console.log('A user connected');
+  socket.on('error', err => console.log(err));
   socket.on('sent message', (msg, date) => {
       console.log(msg);
       console.log(date);
