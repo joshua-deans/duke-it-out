@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+
 const userController = require('../controllers/userController');
 const messageController = require('../controllers/messageController');
 const chatController = require('../controllers/chatController');
+const authController = require("../controllers/authController");
+
 const authMiddleware = require('../../authMiddleware');
 
 // API Code
@@ -29,8 +32,12 @@ router.get('/user/email/:email', userController.getUserByEmail);
 
 // Returns all user data
 router.get('/user', userController.getAllUsers);
-router.post('/user/create', userController.createUser);
-router.post('/user/login', userController.loginUser);
+router.post('/user/create', authController.createUser);
+router.post('/user/login', authController.loginUser);
+
+router.get('/auth', authMiddleware, function(req, res){
+    res.json(req.user);
+});
 
 // Message API
 // Returns message data by ID

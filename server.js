@@ -11,10 +11,19 @@ const port = process.env.PORT || 5000;
 
 const routes = require('./api/routes/routes');
 
+var corsOptions = {
+    allRoutes: true,
+    origin: 'http://localhost:3000',
+    credentials: true,
+    headers: 'content-type'
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors());
+// app.use(cors());
 
 app.use('/api', routes);
 
@@ -27,11 +36,16 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-//   socket.on('disconnect', function(){
-//     console.log('user disconnected');
-//   });
-// });
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  socket.on('sent message', (msg, date) => {
+      console.log(msg);
+      console.log(date);
+     socket.emit('verified message', msg, new Date(date));
+  });
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+http.listen(port, () => console.log(`Listening on port ${port}`));

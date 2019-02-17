@@ -13,13 +13,14 @@ class Login extends Component {
         fetch("http://localhost:5000/api/user/login",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
                 body: JSON.stringify(this.state)})
             .then(function(res) {
                 if (!res.ok){
                     document.location.reload(true);
                 }
                 else {
-                    return res.json();
+                    return res
                 }
             }).then(function(data) {
                 console.log(data);
@@ -35,13 +36,12 @@ class Login extends Component {
 
     render() {
         let loginFormStyle = {
-            width: '50vw',
-            height: '50vh'
+            width: '50vw'
         };
 
         return(
             <div className="container-body mx-auto">
-                <form className="card formStyle" style={loginFormStyle} onSubmit={this.handleSubmit} >
+                <form className="card formStyle shadow" style={loginFormStyle} onSubmit={this.handleSubmit} >
                     <h4 className="p-3">Log In</h4>
                     <div className="form-group">
                         <input type="email" className="form-control" id="email" name="email"
@@ -51,7 +51,7 @@ class Login extends Component {
                         <input type="password" className="form-control pb-2" id="password" name="password" placeholder="Password"
                                onChange={this.handleChange} minLength={6}/>
                     </div>
-                    <button type="submit"className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
+                    <button type="submit"className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Submit</button>
                 </form>
             </div>
         )

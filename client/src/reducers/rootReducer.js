@@ -1,8 +1,8 @@
-import fetchApi from 'fetch-api';
+export const ADD_USER_DATA = 'ADD_USER_DATA';
 
 const initialState = {
   userInfo: {
-    userId: '',
+    id: '',
     name: '',
     username: '',
     email: '',
@@ -11,12 +11,13 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-
-  if (action.type === 'GET_USER') {
-    return getUserByEmail();
+  switch (action.type) {
+    case ADD_USER_DATA:
+      console.log(action.userInfo);
+      return action.userInfo;
+    default:
+      return state;
   }
-
-  return state;
 };
 
 export default reducer;

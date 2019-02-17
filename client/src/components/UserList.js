@@ -8,7 +8,6 @@ export const User = (props) => {
 }
 
 const UserList = (props) => {
-	console.log(props);
 	return (
 		<div>
 			<Header title={props.team.title} header_type="list"/>

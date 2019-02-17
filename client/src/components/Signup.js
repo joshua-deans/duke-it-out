@@ -14,17 +14,18 @@ class Signup extends Component {
         fetch("http://localhost:5000/api/user/create",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
                 body: JSON.stringify(this.state)})
             .then(function(res) {
                 if (!res.ok){
                     document.location.reload(true);
                 }
                 else {
-                    return res.json();
+                    return res;
                 }
             }).then(function(data) {
-            console.log(data);
-            window.location = "/";
+                console.log(data);
+                window.location = "/";
             })
             .catch(function(error) {
             console.log(error);
@@ -37,13 +38,12 @@ class Signup extends Component {
 
     render() {
         let signupFormStyle = {
-            width: '50vw',
-            height: '67vh'
+            width: '50vw'
         };
 
         return(
             <div className="container-body mx-auto">
-            <form className="card formStyle" style={signupFormStyle} onSubmit={this.handleSubmit} >
+            <form className="card formStyle shadow" style={signupFormStyle} onSubmit={this.handleSubmit} >
                 <h4 className="p-3">Sign Up</h4>
                 <div className="form-group">
                     <input type="text" className="form-control" id="username" name="username" placeholder="Username"
@@ -61,7 +61,7 @@ class Signup extends Component {
                     {/*<input type="password" className="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password"*/}
                            {/*onChange={this.handleChange}/>*/}
                 {/*</div>*/}
-                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mx-auto">Submit</button>
+                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Submit</button>
             </form>
             </div>
         )
