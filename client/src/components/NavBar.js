@@ -12,21 +12,21 @@ const NavBar = () => {
             <div className="collapse navbar-collapse w-100" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link class="nav-link" to="/">Home</Link>
+                        <Link className="nav-link" to="/">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <Link class="nav-link" to="/create">Create</Link>
+                        <Link className="nav-link" to="/create">Create</Link>
                     </li>
                     <li className="nav-item">
-                        <Link class="nav-link" to="/room">Room</Link>
+                        <Link className="nav-link" to="/room">Room</Link>
                     </li>
                 </ul>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link class="nav-link" to="/login">Login</Link>
+                        <Link className="nav-link" to="/login">Login</Link>
                     </li>
                     <li className="nav-item">
-                        <Link class="nav-link" to="/signup">Signup</Link>
+                        <Link className="nav-link" to="/signup">Signup</Link>
                     </li>
                 </ul>
             </div>

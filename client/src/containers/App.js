@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route , withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import JwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
@@ -39,9 +39,6 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGuestAccess: () => dispatch ({
-      type: 'GUEST_ACCESS'
-    }),
     onReceiveUserData: (decodedToken) => dispatch ({
       type: 'ADD_USER_DATA',
       userInfo: {
@@ -52,4 +49,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default withRouter(connect(null, mapDispatchToProps)(App));
