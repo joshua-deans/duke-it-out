@@ -7,7 +7,8 @@
     "client": "cd client && yarn start",
     "server": "node server.js",
     "build-client": "cd client && npm run build && cd ..",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "setup-db": "node ./db/createTable"
   },
   "engines": {
     "node": ">=10.0.0",
