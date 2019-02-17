@@ -13,7 +13,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER_DATA:
-      return action.userInfo;
+      return action.data;
     default:
       return state;
   }

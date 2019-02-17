@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
+import { connect } from 'react-redux';
+
 import UserList from '../components/UserList';
 import Header from '../components/Header';
-import './ChatRoom.css';
 import MessageInput from '../components/MessageInput';
-import io from 'socket.io-client';
 import Message from "../components/Message";
-var socket;
+import './ChatRoom.css';
+
+let socket;
 
 class ChatRoom extends Component {
 	constructor(props){
@@ -40,7 +43,7 @@ class ChatRoom extends Component {
 	}
 
 	render () {
-		var messages = this.state.messageList;
+		let messages = this.state.messageList;
 		return (
 			<div className="container-body">
 				<div className="d-flex justify-content-center h-100">
@@ -67,4 +70,10 @@ class ChatRoom extends Component {
 	}
 }
 
-export default ChatRoom;
+const mapStateToProps = state => {
+  return {
+    userInfo: state.userInfo
+  }
+}
+
+export default connect(mapStateToProps, null)(ChatRoom);

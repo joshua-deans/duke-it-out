@@ -41,10 +41,12 @@ const mapDispatchToProps = dispatch => {
   return {
     onReceiveUserData: (decodedToken) => dispatch ({
       type: 'ADD_USER_DATA',
-      userInfo: {
-        id: decodedToken.id,
-        email: decodedToken.email,
-        username: decodedToken.username
+      data: {
+        userInfo: {
+          id: decodedToken.id,
+          email: decodedToken.email,
+          username: decodedToken.username
+        }
       }})
   }
 };
