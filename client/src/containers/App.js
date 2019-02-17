@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
+import { Route , withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import JwtDecode from 'jwt-decode';
+import Cookies from 'js-cookie';
+
 import './App.css';
-import { Route, Link } from 'react-router-dom';
-import CreateRoom from './CreateRoom';
+
+import CreateRoom from '../components/CreateRoom';
 import ChatRoom from './ChatRoom';
 import NavBar from "../components/NavBar";
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from "../components/Login";
+import Signup from "../components/Signup";
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.getCredentials();
-  }
 
-  getCredentials() {
-    fetch("http://localhost:5000/api/auth", {
-      credentials: 'include'})
-        .then(function(res) {
-          return res.json();
-        }).then(function(data) {
-          console.log(data);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+  componentDidMount() {
+    try {
+      const token = Cookies.get('token');
+      const decodedToken = JwtDecode(token);
+      this.props.onReceiveUserData(decodedToken);
+    } catch (err) {
+      console.log("user not signed in");
+    }
   }
 
   render() {
@@ -39,4 +37,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onReceiveUserData: (decodedToken) => dispatch ({
+      type: 'ADD_USER_DATA',
+      userInfo: {
+        id: decodedToken.id,
+        email: decodedToken.email,
+        username: decodedToken.username
+      }})
+  }
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(App));

@@ -26,8 +26,9 @@ router.put('/chat/:name', chatController.modifyAChat);
 router.get('/chat/:id/users', chatController.usersInChat);
 
 // User API
-// Returns user data by ID
-router.get('/user/:id', userController.getUserById);
+// Returns user data
+router.get('/user/id/:id', userController.getUserById);
+router.get('/user/email/:email', userController.getUserByEmail);
 
 // Returns all user data
 router.get('/user', userController.getAllUsers);
