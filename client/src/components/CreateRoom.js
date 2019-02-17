@@ -7,8 +7,6 @@ class CreateRoom extends Component {
             width: '40vw',
             minHeight: '200px', minWidth: '400px'
         };
-        console.log("createroom entered")
-
         return(
             <div className="container-body mx-auto">
             <form className="card container-body formStyle" style={createRoomFormStyle} >
