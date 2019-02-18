@@ -2,6 +2,10 @@ const mysql = require('mysql');
 const config = require('../../config').dbconfig;
 const connection =  mysql.createConnection(config);
 
+connection.on('error', function(err) {
+  console.log(err);
+});
+
 exports.getAllChats = function(req, res){
     connection.query('SELECT * FROM Chat', function (error, results, fields) {
         if (error) res.send(null);
@@ -17,11 +21,17 @@ exports.getChatById = function(req, res){
 };
 
 exports.createAChat = function(req, res){
-    // Adds a new chat data to database
-    // Returns null if didn't work, or returns id
-    connection.query('INSERT INTO Chat SET name=?', req.params.name, function (error, results, fields) {
-        if (error) res.send(null);
-        res.send(results);
+    let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime];
+    connection.query('INSERT INTO Chat SET roomName=?, team1=?, team2=?, startTime=?, endTime=?', inputs,
+      function (err, results, fields) {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          if (results.affectedRows === 0){
+            res.status(400).send();
+          }
+          res.status(200).send(results);
+        }
     });
 };
 

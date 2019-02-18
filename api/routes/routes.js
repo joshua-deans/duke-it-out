@@ -18,7 +18,7 @@ router.get('/chat', chatController.getAllChats);
 router.get('/chat/:id', chatController.getChatById);
 
 // Creates a chat
-router.post('/chat/:name', chatController.createAChat);
+router.post('/chat', chatController.createAChat);
 
 //TODO: Incomplete
 router.put('/chat/:name', chatController.modifyAChat);
