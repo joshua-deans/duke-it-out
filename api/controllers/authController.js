@@ -5,6 +5,10 @@ const connection =  mysql.createConnection(config);
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+connection.on('error', function(err) {
+  console.log(err);
+});
+
 exports.createUser = (req, res) => {
     // returns true if user is created, false if user is not created.
     const hashedPass = bcrypt.hashSync(req.body.password, 8);

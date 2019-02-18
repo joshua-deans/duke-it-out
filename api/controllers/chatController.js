@@ -2,6 +2,10 @@ const mysql = require('mysql');
 const config = require('../../config').dbconfig;
 const connection =  mysql.createConnection(config);
 
+connection.on('error', function(err) {
+  console.log(err);
+});
+
 exports.getAllChats = function(req, res){
     connection.query('SELECT * FROM Chat', function (error, results, fields) {
         if (error) res.send(null);

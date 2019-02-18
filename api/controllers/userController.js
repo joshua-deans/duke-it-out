@@ -5,6 +5,10 @@ const connection =  mysql.createConnection(config);
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+connection.on('error', function(err) {
+  console.log(err);
+});
+
 exports.getUserById = (req, res) => {
     // Returns user data by ID
     connection.query('SELECT * FROM User WHERE id=?', req.params.id, function (error, results, fields) {
