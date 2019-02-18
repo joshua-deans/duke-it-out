@@ -28,7 +28,7 @@ class Signup extends Component {
                 window.location = "/";
             })
             .catch(function(error) {
-            console.log(error);
+                console.log(error);
         });
     }
 

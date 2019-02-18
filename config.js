@@ -4,4 +4,4 @@ exports.dbconfig = {host: "duke-it-out-mysql.mysql.database.azure.com",
         database: "dukeitout",
         port: 3306};
 
-exports.secret = "43155123DukeItOut4134t412345feanvaoijaefaoeiref"
+exports.secret = "43155123DukeItOut4134t412345feanvaoijaefaoeiref";
