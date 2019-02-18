@@ -4,8 +4,6 @@ const connection = mysql.createConnection(config);
 
 let dropTables = 'DROP TABLE IF EXISTS replyto, message, team, chat, user';
 
-
-
 let createUserTable = 'CREATE TABLE IF NOT EXISTS user( \
   id int(11) AUTO_INCREMENT, username varchar(30), email varchar(30), \
   hashedPassword varchar(30), \
@@ -27,8 +25,6 @@ let createTeamTable = 'CREATE TABLE IF NOT EXISTS team( \
   userId int REFERENCES user(id) ON DELETE CASCADE, \
   teamName varchar(255) NOT NULL, \
   PRIMARY KEY(roomId, userId))';
-
-
 
 connection.query(dropTables, function(err, results, fields) {
   if (err) {
