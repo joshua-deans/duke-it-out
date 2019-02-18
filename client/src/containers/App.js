@@ -13,7 +13,6 @@ import Login from "../components/Login";
 import Signup from "../components/Signup";
 
 class App extends Component {
-
   componentDidMount() {
     try {
       const token = Cookies.get('token');
@@ -27,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
+        <NavBar isLoggedIn={this.props.loginStatus} />
           <Route path="/create" component={CreateRoom}/>
           <Route path="/room" component={ChatRoom}/>
           <Route path="/login" component={Login}/>
@@ -37,16 +36,26 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loginStatus: state.isloggedIn
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     onReceiveUserData: (decodedToken) => dispatch ({
       type: 'ADD_USER_DATA',
-      userInfo: {
-        id: decodedToken.id,
-        email: decodedToken.email,
-        username: decodedToken.username
-      }})
+      data: {
+        userInfo: {
+          id: decodedToken.id,
+          email: decodedToken.email,
+          username: decodedToken.username,
+        },
+        isloggedIn: true
+      }
+    })
   }
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
