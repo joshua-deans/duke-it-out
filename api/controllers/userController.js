@@ -4,7 +4,6 @@ const secret = require('../../config').secret;
 const connection =  mysql.createConnection(config);
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const jwtExpress = require('express-jwt');
 
 exports.getUserById = (req, res) => {
     // Returns user data by ID
