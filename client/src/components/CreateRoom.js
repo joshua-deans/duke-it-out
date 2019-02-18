@@ -14,7 +14,26 @@ class CreateRoom extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    fetch("http://localhost:5000/api/chat",
+      {method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify(this.state)})
+      .then(function(res) {
+        if (!res.ok){
+          document.location.reload(true);
+        }
+        else {
+          return res;
+        }
+      })
+      .then(function(data) {
+        console.log(data);
+        window.location = "/";
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   handleChange(event) {
@@ -23,7 +42,6 @@ class CreateRoom extends Component {
 
   handleDateChange(dates){
     this.setState({startTime: dates[0], endTime: dates[1]});
-    console.log(this.state);
   }
 
   render() {
@@ -37,22 +55,22 @@ class CreateRoom extends Component {
         <form className="card container-body formStyle" style={createRoomFormStyle}  onSubmit={this.handleSubmit}  >
           <h4 className="p-3">Make Your Room</h4>
           <div className="form-group">
-            <input type="text" className="form-control card-text" id="roomName" placeholder="Room Name" />
+            <input type="text" className="form-control card-text" id="roomName" name="roomName" placeholder="Room Name" onChange={this.handleChange} required/>
           </div>
           <div className="form-row form-group">
             <div className="col">
-              <input type="text" className="form-control" id="team1" name="team1" placeholder="Team 1" />
+              <input type="text" className="form-control" id="team1" name="team1" placeholder="Team 1" onChange={this.handleChange} />
             </div>
             <div className="col">
-              <input type="text" className="form-control" id="team2" name="team2" placeholder="Team 2" />
+              <input type="text" className="form-control" id="team2" name="team2" placeholder="Team 2" onChange={this.handleChange} />
             </div>
           </div>
           <div className="form-group">
             <Flatpickr placeholder="Pick start and end time" className="form-control" options={
               {mode: "range", minDate: 'today', maxDate: new Date().fp_incr(7), enableTime: true, dateFormat: "m/d/Y H:i"}
-            } onChange={this.handleDateChange} style={{'backgroundColor':'#fff'}}/>
+            } onChange={this.handleDateChange} style={{'backgroundColor':'#fff'}} required/>
           </div>
-          <button type="submit"className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Start</button>
+          <button type="submit" className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Start</button>
         </form>
       </div>
     )
