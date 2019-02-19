@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
-const connection =  mysql.createConnection(config);
+let connection =  mysql.createConnection(config);
 
 connection.on('error', function(err) {
   console.log(err);
+  connection =  mysql.createConnection(config);
 });
 
 exports.getAllChats = function(req, res){
@@ -21,8 +22,10 @@ exports.getChatById = function(req, res){
 };
 
 exports.createAChat = function(req, res){
-    let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime];
-    connection.query('INSERT INTO Chat SET roomName=?, team1=?, team2=?, startTime=?, endTime=?', inputs,
+    let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime,
+      req.body.userId];
+    connection.query('INSERT INTO Chat SET roomName=?, team1=?, team2=?, startTime=?, endTime=?, creator_id=?',
+      inputs,
       function (err, results, fields) {
         if (err) {
           res.status(500).send(err);

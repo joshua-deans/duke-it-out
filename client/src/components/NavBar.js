@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 const NavBar = (props) => {
-  console.log(props);
   return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
           <a className="navbar-brand" href="#">Duke It Out</a>

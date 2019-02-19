@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import 'flatpickr/dist/themes/dark.css'
 import Flatpickr from 'react-flatpickr'
+import {connect} from "react-redux";
 
 class CreateRoom extends Component {
   constructor(props){
     super(props);
     this.state = {'roomName': '', 'team1': '', 'team2': '',
-      'startTime': '', 'endTime': ''};
+      'startTime': null, 'endTime': null};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -14,11 +15,16 @@ class CreateRoom extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (!this.props.loginStatus || this.state.startTime == null || this.state.endTime == null){
+      return;
+    }
+    let reqObj = this.state;
+    reqObj.userId = this.props.userInfo.id;
     fetch("http://localhost:5000/api/chat",
       {method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
-        body: JSON.stringify(this.state)})
+        body: JSON.stringify(reqObj)})
       .then(function(res) {
         if (!res.ok){
           document.location.reload(true);
@@ -72,11 +78,24 @@ class CreateRoom extends Component {
               {mode: "range", minDate: 'today', maxDate: new Date().fp_incr(7), enableTime: true, dateFormat: "m/d/Y H:i"}
             } onChange={this.handleDateChange} style={{'backgroundColor':'#fff'}} required/>
           </div>
-          <button type="submit" className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Start</button>
+          {this.props.loginStatus ?
+            <button type="submit"
+                    className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto" >Start</button>
+            :
+            <button type="submit"
+                    className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto" disabled>Must log in</button>
+          }
         </form>
       </div>
     )
   }
 }
 
-export default CreateRoom;
+const mapStateToProps = state => {
+  return {
+    loginStatus: state.isloggedIn,
+    userInfo: state.userInfo
+  }
+};
+
+export default connect(mapStateToProps, null)(CreateRoom);
