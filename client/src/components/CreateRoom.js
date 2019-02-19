@@ -41,7 +41,9 @@ class CreateRoom extends Component {
   }
 
   handleDateChange(dates){
-    this.setState({startTime: dates[0], endTime: dates[1]});
+    if (dates != null && dates.length === 2) {
+      this.setState({startTime: dates[0], endTime: dates[1]});
+    }
   }
 
   render() {
