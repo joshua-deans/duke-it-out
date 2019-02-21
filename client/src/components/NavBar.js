@@ -23,8 +23,16 @@ const NavBar = (props) => {
               </ul>
               {props.isLoggedIn ? 
                 <ul className="navbar-nav">
-                  <li className="nav-item">
-                      <Link className="nav-link" to="/logout">Logout</Link>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {props.userInfo.username}
+                    </a>
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <Link className="dropdown-item" to="#">Profile</Link>
+                      <div className="dropdown-divider"/>
+                      <Link className="dropdown-item" to="/logout">Logout</Link>
+                    </div>
                   </li>
                 </ul> 
                 :

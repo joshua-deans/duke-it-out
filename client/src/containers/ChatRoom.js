@@ -14,8 +14,8 @@ class ChatRoom extends Component {
 	constructor(props){
 		super(props);
 		socket = io();
-		socket.on('verified message', (msg, date) => {
-			this.setState({messageList: [...this.state.messageList, {body: msg, date: date}]});
+		socket.on('verified message', (msg, date, userInfo) => {
+			this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
 		});
 		this.state = {
 			roomName: "Raptors vs Bulls",
@@ -32,7 +32,7 @@ class ChatRoom extends Component {
 
 	sendMessage = (event) => {
 		event.preventDefault();
-		socket.emit('sent message', this.state.message, new Date(Date.now()));
+		socket.emit('sent message', this.state.message, new Date(Date.now()), this.props.userInfo);
 		this.setState({message: ''});
 	};
 
@@ -54,9 +54,9 @@ class ChatRoom extends Component {
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
 						<div id="msgBox" className="msgBoxStyle">
-							<Message body="This is a test" date={ new Date() } />
+							{/*<Message body="This is a test" date={ new Date() } />*/}
 							{this.state.messageList.map((message, index) => (
-							<Message body={ message.body } date={ message.date } />
+							<Message body={ message.body } date={ message.date } senderInfo={message.userInfo} />
 							))}
 						</div>
 						<MessageInput value={this.state.message} onSubmitEvent={this.sendMessage} onChangeValue={this.handleChangeMessage}/>
@@ -74,6 +74,6 @@ const mapStateToProps = state => {
   return {
     userInfo: state.userInfo
   }
-}
+};
 
 export default connect(mapStateToProps, null)(ChatRoom);

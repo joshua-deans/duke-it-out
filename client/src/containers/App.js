@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar isLoggedIn={this.props.loginStatus} />
+        <NavBar isLoggedIn={this.props.loginStatus} userInfo={this.props.userInfo} />
           <Route path="/create" component={CreateRoom}/>
           <Route path="/room" component={ChatRoom}/>
           <Route path="/login" component={Login}/>
@@ -38,9 +38,10 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    loginStatus: state.isloggedIn
+    loginStatus: state.isloggedIn,
+    userInfo: state.userInfo
   }
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {

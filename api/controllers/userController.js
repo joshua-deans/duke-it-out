@@ -1,12 +1,13 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
 const secret = require('../../config').secret;
-const connection =  mysql.createConnection(config);
+let connection =  mysql.createConnection(config);
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 connection.on('error', function(err) {
   console.log(err);
+  connection =  mysql.createConnection(config);
 });
 
 exports.getUserById = (req, res) => {
