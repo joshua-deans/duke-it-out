@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 const messageController = require('../controllers/messageController');
 const chatController = require('../controllers/chatController');
 const authController = require("../controllers/authController");
+const teamController = require("../controllers/teamController");
 
 const authMiddleware = require('../../authMiddleware');
 
@@ -25,10 +26,12 @@ router.put('/chat/:name', chatController.modifyAChat);
 
 router.get('/chat/:id/users', chatController.usersInChat);
 
+// Add user to team
+router.post('/team', teamController.addUserToTeam);
+
 // User API
 // Returns user data
 router.get('/user/id/:id', userController.getUserById);
-router.get('/user/email/:email', userController.getUserByEmail);
 
 // Returns all user data
 router.get('/user', userController.getAllUsers);

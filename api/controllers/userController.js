@@ -18,15 +18,6 @@ exports.getUserById = (req, res) => {
     });
 };
 
-exports.getUserByEmail = (req, res) => {
-  console.log(req);
-  // Returns user data by Email
-  connection.query('SELECT * FROM User WHERE email=?', req.params.email, function (error, results, fields) {
-      if (error) res.send(null);
-      res.send(results);
-  });
-};
-
 exports.getAllUsers = (req, res) => {
     // Returns all user data (probably minus "expensive data")
     connection.query('SELECT * FROM User', function (error, results, fields) {
