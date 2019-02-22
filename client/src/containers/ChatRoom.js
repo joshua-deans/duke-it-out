@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import MessageInput from '../components/MessageInput';
 import Message from "../components/Message";
 import './ChatRoom.css';
+import moment from 'moment-timezone';
 
 let socket;
 
@@ -30,7 +31,7 @@ class ChatRoom extends Component {
 		};
 	}
 
-  componentDidMount() {
+  componentWillMount() {
 	  fetch("http://localhost:5000/api/message")
       .then(res => {
         if (!res.ok){
@@ -49,6 +50,7 @@ class ChatRoom extends Component {
           id: val.creator_id,
           username: val.username,
           email: val.email};
+        console.log(moment(val.timestamp));
         self.setState({messageList: [...self.state.messageList,
             {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
       })
@@ -59,7 +61,7 @@ class ChatRoom extends Component {
   sendMessage = (event) => {
 		event.preventDefault();
 		if (this.props.isLoggedIn) {
-      socket.emit('sent message', this.state.currentMsg, new Date(Date.now()), this.props.userInfo);
+      socket.emit('sent message', this.state.currentMsg, new moment().format(), this.props.userInfo);
       this.setState({currentMsg: ''});
     } else {
 		  alert("You must be logged in to send a message!");
