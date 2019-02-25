@@ -8,16 +8,20 @@ connection.on('error', function(err) {
 });
 
 exports.getAllChats = function(req, res){
-    connection.query('SELECT * FROM Chat', function (error, results, fields) {
-        if (error) res.send(null);
-        res.send(results);
-    });
+  connection.query('SELECT * FROM Chat', function (error, results, fields) {
+    if (error) {
+      res.status(500).send(error);
+    }
+    res.status(200).send(results);
+  });
 };
 
 exports.getChatById = function(req, res){
     connection.query('SELECT * FROM Chat WHERE id=' + req.params.id, function (error, results, fields) {
-        if (error) res.send(null);
-        res.send(results);
+      if (error) {
+        res.status(500).send(error);
+      }
+      res.status(200).send(results);
     });
 };
 
