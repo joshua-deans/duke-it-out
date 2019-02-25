@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import MessageInput from '../components/MessageInput';
 import Message from "../components/Message";
 import './ChatRoom.css';
+import moment from 'moment-timezone';
 
 let socket;
 
@@ -25,18 +26,49 @@ class ChatRoom extends Component {
 			rightTeam: {
 				title: "Bulls",
 				members: ["Andy", "Kyle"]},
-			message: '',
+			currentMsg: '',
 			messageList: []
 		};
 	}
 
-	sendMessage = (event) => {
+  componentWillMount() {
+	  fetch("http://localhost:5000/api/message")
+      .then(res => {
+        if (!res.ok){
+          alert(res.status + "\n" + res.statusText);
+          console.log(res);
+          throw "Failed to sign up";
+        }
+        else {
+          return res.json();
+        }
+    }).then(data => {
+      var self = this;
+      data.forEach(function(val){
+        console.log(val);
+        var currUserInfo = {
+          id: val.creator_id,
+          username: val.username,
+          email: val.email};
+        console.log(moment(val.timestamp));
+        self.setState({messageList: [...self.state.messageList,
+            {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
+      })
+    })
+
+	}
+
+  sendMessage = (event) => {
 		event.preventDefault();
-		socket.emit('sent message', this.state.message, new Date(Date.now()), this.props.userInfo);
-		this.setState({message: ''});
+		if (this.props.isLoggedIn) {
+      socket.emit('sent message', this.state.currentMsg, new moment().format(), this.props.userInfo);
+      this.setState({currentMsg: ''});
+    } else {
+		  alert("You must be logged in to send a message!");
+    }
 	};
 
-	handleChangeMessage = event => this.setState({message: event.target.value});
+	handleChangeMessage = event => this.setState({currentMsg: event.target.value});
 
 	componentWillUnmount() {
 		socket.disconnect();
@@ -59,7 +91,8 @@ class ChatRoom extends Component {
 							<Message body={ message.body } date={ message.date } senderInfo={message.userInfo} />
 							))}
 						</div>
-						<MessageInput value={this.state.message} onSubmitEvent={this.sendMessage} onChangeValue={this.handleChangeMessage}/>
+						<MessageInput value={this.state.currentMsg} onSubmitEvent={this.sendMessage}
+                          onChangeValue={this.handleChangeMessage} isLoggedIn={this.props.isLoggedIn}/>
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
@@ -72,7 +105,8 @@ class ChatRoom extends Component {
 
 const mapStateToProps = state => {
   return {
-    userInfo: state.userInfo
+    userInfo: state.userInfo,
+    isLoggedIn: state.isloggedIn
   }
 };
 

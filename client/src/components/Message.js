@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Message.css';
 import Moment from 'react-moment';
+import moment from 'moment-timezone';
 
 class Message extends Component {
     constructor(props){
@@ -11,7 +12,7 @@ class Message extends Component {
         return <div className="msgContainerStyle bg-light text-dark border border-dark m-3 px-3" onSubmit={this.props.onSubmitEvent}>
             <h6 className="my-1"><strong>{this.props.senderInfo.username}</strong></h6>
             <p className="msgBodyStyle mb-1 text-wrap">{this.props.body}</p>
-            <p className="msgDateStyle mb-0 font-weight-light small text-capitalize" title={this.props.date.toLocaleString()}><Moment interval={15000} fromNow>{this.props.date}</Moment></p>
+            <p className="msgDateStyle mb-0 font-weight-light small text-capitalize" title={moment(this.props.date).local().toString()}><Moment interval={15000} fromNow>{this.props.date}</Moment></p>
         </div>
     }
 }

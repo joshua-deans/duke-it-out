@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const config = require('../config').dbconfig;
 const connection = mysql.createConnection(config);
 
-let dropTables = 'DROP TABLE IF EXISTS replyto, message, team, chat, user';
+let dropTables = 'DROP TABLE IF EXISTS replyto, currentMsg, team, chat, user';
 
 let createUserTable = 'CREATE TABLE IF NOT EXISTS user( \
   id int(11) AUTO_INCREMENT, username varchar(30), email varchar(30), \
@@ -15,8 +15,8 @@ let createChatTable = 'CREATE TABLE IF NOT EXISTS chat( \
   team1 varchar(45) NOT NULL, team2 varchar(45) NOT NULL, \
   PRIMARY KEY(id))';
 
-let createMessageTable = 'CREATE TABLE IF NOT EXISTS message( \
-  id int(11) AUTO_INCREMENT, message varchar(300), timestamp date, \
+let createMessageTable = 'CREATE TABLE IF NOT EXISTS currentMsg( \
+  id int(11) AUTO_INCREMENT, currentMsg varchar(300), timestamp date, \
   creator_id int(11) REFERENCES user(id), chat_id int(11) REFERENCES chat(id), \
   PRIMARY KEY(id))';
 
@@ -28,36 +28,36 @@ let createTeamTable = 'CREATE TABLE IF NOT EXISTS team( \
 
 connection.query(dropTables, function(err, results, fields) {
   if (err) {
-    console.log(err.message);
+    console.log(err.currentMsg);
   }
 })
 
 connection.query(createUserTable, function(err, results, fields) {
   if (err) {
-    console.log(err.message);
+    console.log(err.currentMsg);
   }
 });
 
 connection.query(createChatTable, function(err, results, fields) {
   if (err) {
-    console.log(err.message);
+    console.log(err.currentMsg);
   }
 });
 
 connection.query(createTeamTable, function(err, results, fields) {
   if (err) {
-    console.log(err.message);
+    console.log(err.currentMsg);
   }
 });
 
 connection.query(createMessageTable, function(err, results, fields) {
   if (err) {
-    console.log(err.message);
+    console.log(err.currentMsg);
   }
 });
 
 connection.end(function(err) {
   if (err) {
-    return console.log(err.message);
+    return console.log(err.currentMsg);
   }
 })

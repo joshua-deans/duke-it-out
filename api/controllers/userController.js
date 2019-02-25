@@ -37,17 +37,17 @@ exports.getAllUsers = (req, res) => {
 
 exports.createUser = (req, res) => {
     // returns true if user is created, false if user is not created.
-    const hashedPass = bcrypt.hashSync(req.body.password, 8);
-    var formInfo = [req.body.username, req.body.email, hashedPass];
-    connection.query('INSERT INTO User SET username=?, email=?, hashedPassword=?',
+  const hashedPass = bcrypt.hashSync(req.body.password, 8);
+  const formInfo = [req.body.username, req.body.email, hashedPass];
+  connection.query('INSERT INTO User SET username=?, email=?, hashedPassword=?',
         formInfo,
         (err, results, fields) => {
             if (err) {
                 res.status(500).send(err);
             }
             else {
-                var user = {id: results.insertId, email: req.body.email, username: req.body.username};
-                jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
+              const user = {id: results.insertId, email: req.body.email, username: req.body.username};
+              jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
                     res.cookie('token', token, { httpOnly: true });
                     user.token = token;
                     res.status(200).send(user);
