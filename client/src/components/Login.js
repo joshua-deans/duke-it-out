@@ -17,7 +17,9 @@ class Login extends Component {
                 body: JSON.stringify(this.state)})
             .then(function(res) {
                 if (!res.ok){
-                    document.location.reload(true);
+                    alert(res.status + "\n" + res.statusText);
+                    console.log(res);
+                    throw "Failed to log in";
                 }
                 else {
                     return res

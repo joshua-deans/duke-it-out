@@ -23,7 +23,7 @@ exports.createUser = (req, res) => {
             else {
                 var user = {id: results.insertId, email: req.body.email, username: req.body.username};
                 jwt.sign(user, secret, { expiresIn: '3h' }, (err, token) => {
-                    if (err) console.log(err);
+                    if (err) res.status(400).send(err);
                     res.cookie('token', token, { httpOnly: false });
                     user.token = token;
                     res.status(200).end();
@@ -42,10 +42,10 @@ exports.loginUser = (req, res) => {
             }
             else {
                 if (results.length > 1 || results.length <= 0){
-                    res.status(404).send(JSON.stringify({"message": "E-mail not found"}));
+                    res.status(404).send(JSON.stringify({"currentMsg": "E-mail not found"}));
                 }
                 else if (!bcrypt.compareSync(req.body.password, results[0].hashedPassword)){
-                    res.status(404).send(JSON.stringify({"message": "E-mail and password do not match!"}));
+                    res.status(404).send(JSON.stringify({"currentMsg": "E-mail and password do not match!"}));
                 }
                 else {
                     var user = {id: results[0].id, email: results[0].email, username: results[0].username};
