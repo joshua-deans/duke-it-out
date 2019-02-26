@@ -1,21 +1,16 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
-let connection =  mysql.createConnection(config);
-let connectionErrorHandler = require('../../helpers').connectionErrorHandler;
-
-connection.on('error', function(err) {
-  connectionErrorHandler(connection, err);
-});
+const pool = mysql.createPool(config);
 
 exports.getMessageById = (req, res) => {
-    connection.query('SELECT * FROM Message WHERE id=' + req.params.id, (error, results, fields) => {
+    pool.query('SELECT * FROM Message WHERE id=' + req.params.id, (error, results, fields) => {
         if (error) res.status(500).end();
         res.send(results);
     });
 };
 
 exports.getAllMessages = (req, res) => {
-  connection.query('SELECT Message.creator_id, User.username, User.email, Message.message, Message.timestamp ' +
+  pool.query('SELECT Message.creator_id, User.username, User.email, Message.message, Message.timestamp ' +
     'FROM Message INNER JOIN User ON Message.creator_id = User.id ORDER BY timestamp ASC', (error, results, fields) => {
         if (error) {
           console.log(error);
@@ -27,7 +22,7 @@ exports.getAllMessages = (req, res) => {
 
 exports.createMessage = function(msg, date, userInfo, socket){
   let messageInfo = [msg, date, userInfo.id];
-  connection.query('INSERT INTO Message SET message=?, timestamp=?, creator_id=?, chat_id=1',
+  pool.query('INSERT INTO Message SET message=?, timestamp=?, creator_id=?, chat_id=1',
     messageInfo, (error, results, fields) => {
     if (error) console.log(error);
     else {

@@ -1,14 +1,10 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
-let connection =  mysql.createConnection(config);
+const pool = mysql.createPool(config);
 let connectionErrorHandler = require('../../helpers').connectionErrorHandler;
 
-connection.on('error', function(err) {
-  connectionErrorHandler(connection, err);
-});
-
 exports.getAllChats = function(req, res){
-  connection.query('SELECT * FROM Chat', (error, results, fields) => {
+  pool.query('SELECT * FROM Chat', (error, results, fields) => {
     if (error) {
       console.log(error);
       res.status(500).end();
@@ -18,7 +14,7 @@ exports.getAllChats = function(req, res){
 };
 
 exports.getChatById = function(req, res){
-    connection.query('SELECT * FROM Chat WHERE id=' + req.params.id, function (error, results, fields) {
+    pool.query('SELECT * FROM Chat WHERE id=' + req.params.id, function (error, results, fields) {
       if (error) {
         res.status(500).send(error);
       }
@@ -29,7 +25,7 @@ exports.getChatById = function(req, res){
 exports.createAChat = function(req, res){
     let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime,
       req.body.userId];
-    connection.query('INSERT INTO Chat SET roomName=?, team1=?, team2=?, startTime=?, endTime=?, creator_id=?',
+    pool.query('INSERT INTO Chat SET roomName=?, team1=?, team2=?, startTime=?, endTime=?, creator_id=?',
       inputs,
       function (err, results, fields) {
         if (err) {
@@ -50,7 +46,7 @@ exports.modifyAChat = function(req, res){
 
 exports.usersInChat = function(req, res){
     // Returns users in the chat
-    connection.query('SELECT * FROM User WHERE currentChat=?' + req.params.id, function (error, results, fields) {
+    pool.query('SELECT * FROM User WHERE currentChat=?' + req.params.id, function (error, results, fields) {
         if (error) res.send(null);
         res.send(results);
     });
