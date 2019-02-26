@@ -1,10 +1,10 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
 let connection =  mysql.createConnection(config);
+let connectionErrorHandler = require('../../helpers').connectionErrorHandler;
 
 connection.on('error', function(err) {
-  console.log(err);
-  connection =  mysql.createConnection(config);
+  connectionErrorHandler(connection, err);
 });
 
 exports.getAllChats = function(req, res){

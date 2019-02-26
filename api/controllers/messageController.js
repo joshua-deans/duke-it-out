@@ -1,10 +1,10 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
 let connection =  mysql.createConnection(config);
+let connectionErrorHandler = require('../../helpers').connectionErrorHandler;
 
-connection.on('error', err => {
-  console.log(err);
-  connection =  mysql.createConnection(config);
+connection.on('error', function(err) {
+  connectionErrorHandler(connection, err);
 });
 
 exports.getMessageById = (req, res) => {

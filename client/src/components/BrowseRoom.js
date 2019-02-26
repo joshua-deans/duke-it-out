@@ -31,7 +31,7 @@ class BrowseRoom extends Component {
 
   render() {
     return (
-      <div className="container-fluid mt-4">
+      <div className="container-body container-fluid h-50 pt-4">
         <div className="card p-4">
           { createNavBar }
           <br />

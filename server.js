@@ -9,11 +9,11 @@ const io = require('socket.io')(http);
 const mysql = require('mysql');
 const config = require('./config').dbconfig;
 let connection =  mysql.createConnection(config);
+let connectionErrorHandler = require('./helpers').connectionErrorHandler;
 const messageController = require('./api/controllers/messageController');
 
 connection.on('error', function(err) {
-  console.log(err);
-  connection =  mysql.createConnection(config);
+  connectionErrorHandler(connection, err);
 });
 
 const port = process.env.PORT || 5000;
