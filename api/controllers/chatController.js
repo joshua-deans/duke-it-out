@@ -8,9 +8,10 @@ connection.on('error', function(err) {
 });
 
 exports.getAllChats = function(req, res){
-  connection.query('SELECT * FROM Chat', function (error, results, fields) {
+  connection.query('SELECT * FROM Chat', (error, results, fields) => {
     if (error) {
-      res.status(500).send(error);
+      console.log(error);
+      res.status(500).end();
     }
     res.status(200).send(results);
   });

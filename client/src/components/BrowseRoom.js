@@ -7,13 +7,14 @@ class BrowseRoom extends Component {
     this.state = {chatRooms: []};
   }
 
-  componentDidMount = () => {
+  componentWillMount(){
     const setRoomState = (room) => {
       this.setState({chatRooms: [...this.state.chatRooms, room]});
     };
     fetch("http://localhost:5000/api/chat")
-      .then(function(res) {
+      .then(res => {
         if (!res.ok){
+          console.log(res);
           throw "Getting chat rooms failed";
         }
         return res.json();
