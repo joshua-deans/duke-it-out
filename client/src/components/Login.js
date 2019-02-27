@@ -8,6 +8,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+<<<<<<< HEAD
   handleSubmit(event) {
     event.preventDefault();
     fetch("http://localhost:5000/api/user/login", {
@@ -31,6 +32,31 @@ class Login extends Component {
         console.log(error);
       });
   }
+=======
+    handleSubmit(event) {
+        event.preventDefault();
+        fetch("http://localhost:5000/api/user/login",
+            {method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify(this.state)})
+            .then(function(res) {
+                if (!res.ok){
+                    alert(res.status + "\n" + res.statusText);
+                    console.log(res);
+                    throw "Failed to log in";
+                }
+                else {
+                    return res
+                }
+            }).then(function(data) {
+                console.log(data);
+                window.location = "/";
+            }).catch(function(error) {
+                console.log(error);
+            });
+    }
+>>>>>>> edc1e7bf35591469a8043f0322a4fec6edc1c280
 
   handleChange(event) {
     this.state[event.target.name] = event.target.value;

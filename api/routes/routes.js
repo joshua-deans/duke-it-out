@@ -43,10 +43,10 @@ router.get('/auth', authMiddleware, function(req, res){
 });
 
 // Message API
-// Returns message data by ID
+// Returns currentMsg data by ID
 router.get('/message/:id', messageController.getMessageById);
 
-// Returns all message data
+// Returns all currentMsg data
 router.get('/message', messageController.getAllMessages)
     .post('/message', function(req, res){
     // TODO: Complete code when user creation is finished

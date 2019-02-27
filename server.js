@@ -6,6 +6,9 @@ const cors = require('cors');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const mysql = require('mysql');
+const config = require('./config').dbconfig;
+const messageController = require('./api/controllers/messageController');
 
 const port = process.env.PORT || 5000;
 
@@ -40,10 +43,7 @@ io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('error', err => console.log(err));
   socket.on('sent message', (msg, date, userInfo) => {
-     console.log(msg);
-     console.log(date);
-     console.log(userInfo);
-     socket.emit('verified message', msg, new Date(date), userInfo);
+    messageController.createMessage(msg, date, userInfo, socket);
   });
   socket.on('disconnect', () => {
     console.log('A user disconnected');

@@ -1,17 +1,19 @@
 .chatbox {
-  border-width: 1px 0 1px 0;
-  border-style: solid; 
-  border-color: #d9d9d9;
-  width: 60%;
-  display:flex;
-  flex-direction: column;
+    border-width: 1px 0 1px 0;
+    border-style: solid; 
+    border-color: #d9d9d9;
+    width: 60%;
+    max-height: 100%;
+    display:flex;
+    flex-direction: column;
 }
 
 .userlist {
-  border: 1px solid #d9d9d9;
-  width:20%;
-  display:flex;
-  flex-direction: column;
+    border: 1px solid #d9d9d9;
+    width:20%;
+    display:flex;
+    max-height: 100%;
+    flex-direction: column;
 }
 
 .msgInputStyle {
@@ -22,5 +24,7 @@
 }
 
 .msgBoxStyle {
-  flex-grow : 1;
+    flex-grow : 1;
+    flex-basis: 0;
+    overflow-y: scroll;
 }
