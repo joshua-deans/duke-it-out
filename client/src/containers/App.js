@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 
 import './App.css';
 
+import BrowseRoom from '../components/BrowseRoom';
 import CreateRoom from '../components/CreateRoom';
 import ChatRoom from './ChatRoom';
 import NavBar from "../components/NavBar";
@@ -27,10 +28,11 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar isLoggedIn={this.props.loginStatus} userInfo={this.props.userInfo} />
-          <Route path="/create" component={CreateRoom}/>
-          <Route path="/room" component={ChatRoom}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/signup" component={Signup}/>
+        <Route exact path="/" component={BrowseRoom}/>
+        <Route path="/create" component={CreateRoom}/>
+        <Route path="/room" component={ChatRoom}/>
+        <Route path="/login" component={Login}/>
+        <Route path="/signup" component={Signup}/>
       </div>
     );
   }

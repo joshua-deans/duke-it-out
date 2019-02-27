@@ -34,6 +34,7 @@ class ChatRoom extends Component {
   componentWillMount() {
 	  fetch("http://localhost:5000/api/message")
       .then(res => {
+        console.log(res);
         if (!res.ok){
           alert(res.status + "\n" + res.statusText);
           console.log(res);
@@ -45,7 +46,6 @@ class ChatRoom extends Component {
     }).then(data => {
       var self = this;
       data.forEach(function(val){
-        console.log(val);
         var currUserInfo = {
           id: val.creator_id,
           username: val.username,
@@ -55,7 +55,6 @@ class ChatRoom extends Component {
             {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
       })
     })
-
 	}
 
   sendMessage = (event) => {

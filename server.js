@@ -8,13 +8,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const mysql = require('mysql');
 const config = require('./config').dbconfig;
-let connection =  mysql.createConnection(config);
 const messageController = require('./api/controllers/messageController');
-
-connection.on('error', function(err) {
-  console.log(err);
-  connection =  mysql.createConnection(config);
-});
 
 const port = process.env.PORT || 5000;
 

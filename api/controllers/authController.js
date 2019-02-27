@@ -1,20 +1,15 @@
 const mysql = require('mysql');
 const config = require('../../config').dbconfig;
 const secret = require('../../config').secret;
-let connection =  mysql.createConnection(config);
+const pool = mysql.createPool(config);
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-connection.on('error', function(err) {
-  console.log(err);
-  connection =  mysql.createConnection(config);
-});
 
 exports.createUser = (req, res) => {
     // returns true if user is created, false if user is not created.
     const hashedPass = bcrypt.hashSync(req.body.password, 8);
     var formInfo = [req.body.username, req.body.email, hashedPass];
-    connection.query('INSERT INTO User SET username=?, email=?, hashedPassword=?',
+    pool.query('INSERT INTO User SET username=?, email=?, hashedPassword=?',
         formInfo,
         (err, results, fields) => {
             if (err) {
@@ -34,7 +29,7 @@ exports.createUser = (req, res) => {
 
 exports.loginUser = (req, res) => {
     // returns true if user is created, false if user is not created.
-    connection.query('SELECT * FROM User WHERE email=?',
+    pool.query('SELECT * FROM User WHERE email=?',
         req.body.email,
         (err, results, fields) => {
             if (err) {
