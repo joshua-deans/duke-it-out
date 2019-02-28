@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('../controllers/userController');
-const messageController = require('../controllers/messageController');
-const chatController = require('../controllers/chatController');
-const authController = require("../controllers/authController");
-const teamController = require("../controllers/teamController");
-
-const authMiddleware = require('../../authMiddleware');
+const userController = require('./controllers/userController');
+const messageController = require('./controllers/messageController');
+const chatController = require('./controllers/chatController');
+const authController = require("./controllers/authController");
+const teamController = require("./controllers/teamController");
+const authMiddleware = require('../authMiddleware');
 
 // API Code
 
@@ -38,7 +37,7 @@ router.get('/user', userController.getAllUsers);
 router.post('/user/create', authController.createUser);
 router.post('/user/login', authController.loginUser);
 
-router.get('/auth', authMiddleware, function(req, res){
+router.get('/auth', authMiddleware, (req, res) => {
     res.json(req.user);
 });
 
@@ -46,12 +45,16 @@ router.get('/auth', authMiddleware, function(req, res){
 // Returns currentMsg data by ID
 router.get('/message/:id', messageController.getMessageById);
 
+router.get('/message/user/:id', messageController.getMessagesByUserId);
+
+router.get('/message/room/:id', messageController.getMessagesByRoomId);
+
 // Returns all currentMsg data
 router.get('/message', messageController.getAllMessages)
-    .post('/message', function(req, res){
+    .post('/message', (req, res) => {
     // TODO: Complete code when user creation is finished
 })
-    .put('/message', function(req, res){
+    .put('/message', (req, res) => {
     // TODO: Complete code when user creation is finished
 });
 
