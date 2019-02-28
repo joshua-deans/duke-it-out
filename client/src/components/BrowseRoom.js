@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 class BrowseRoom extends Component {
@@ -14,7 +15,6 @@ class BrowseRoom extends Component {
     fetch("http://localhost:5000/api/chat")
       .then(res => {
         if (!res.ok){
-          console.log(res);
           throw "Getting chat rooms failed";
         }
         return res.json();
@@ -30,6 +30,10 @@ class BrowseRoom extends Component {
       });
   };
 
+  handleRoomJoin(event){
+
+  }
+
   render() {
     return (
       <div className="container-body container-fluid h-50 pt-4">
@@ -44,7 +48,8 @@ class BrowseRoom extends Component {
                 <p className="mb-1">{room.team1} vs. {room.team2}</p>
                 <p className="mb-1">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
                 <p>Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
-                <button id={"button-" + room.id} value={room.id} className="btn btn-success btn-sm right">Join Chat</button>
+                <Link to={{pathname: "/room" , state: {roomInfo: room}}}
+                      id={"button-" + room.id} value={room.id} className="btn btn-success btn-sm right">Join Chat</Link>
               </div>
               ))}
           </div>
