@@ -10,29 +10,55 @@ import './ChatRoom.css';
 import moment from 'moment-timezone';
 
 let socket;
+let roomInfo;
 
 class ChatRoom extends Component {
-	constructor(props){
-		super(props);
-		socket = io();
-		socket.on('verified message', (msg, date, userInfo) => {
-			this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
-		});
-		this.state = {
-			roomName: "Raptors vs Bulls",
-			leftTeam: {
-				title: "Raptors",
-				members: ["John", "Andrew", "Bob"]},
-			rightTeam: {
-				title: "Bulls",
-				members: ["Andy", "Kyle"]},
-			currentMsg: '',
-			messageList: []
-		};
+	constructor(props) {
+    super(props);
+    if (!this.props.location.state){
+      this.props.history.goBack();
+    } else {
+      roomInfo = this.props.location.state.roomInfo;
+      this.getPreviousMessages();
+      socket = io();
+      socket.on('verified message', (msg, date, userInfo) => {
+        this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
+      });
+      if (roomInfo == null) {
+        // TODO: handle in better way
+        this.state = {
+          roomName: "Raptors vs Bulls",
+          leftTeam: {
+            title: "Raptors",
+            members: ["John", "Andrew", "Bob"]
+          },
+          rightTeam: {
+            title: "Bulls",
+            members: ["Andy", "Kyle"]
+          },
+          currentMsg: '',
+          messageList: []
+        };
+      } else {
+        this.state = {
+          roomName: roomInfo.roomName,
+          leftTeam: {
+            title: roomInfo.team1,
+            members: ["John", "Andrew", "Bob"]
+          },
+          rightTeam: {
+            title: roomInfo.team2,
+            members: ["Andy", "Kyle"]
+          },
+          currentMsg: '',
+          messageList: []
+        };
+      }
+    }
 	}
 
-  componentWillMount() {
-	  fetch("http://localhost:5000/api/message")
+  getPreviousMessages() {
+	  fetch("http://localhost:5000/api/message/room/" + roomInfo.id)
       .then(res => {
         console.log(res);
         if (!res.ok){
@@ -45,7 +71,7 @@ class ChatRoom extends Component {
         }
     }).then(data => {
       var self = this;
-      data.forEach(function(val){
+      data.forEach(val => {
         var currUserInfo = {
           id: val.creator_id,
           username: val.username,
@@ -54,13 +80,15 @@ class ChatRoom extends Component {
         self.setState({messageList: [...self.state.messageList,
             {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
       })
-    })
+    }).catch(error => {
+        console.log(error);
+      });
 	}
 
   sendMessage = (event) => {
 		event.preventDefault();
 		if (this.props.isLoggedIn) {
-      socket.emit('sent message', this.state.currentMsg, new moment().format(), this.props.userInfo);
+      socket.emit('sent message', this.state.currentMsg, new moment().format(), this.props.userInfo, roomInfo.id);
       this.setState({currentMsg: ''});
     } else {
 		  alert("You must be logged in to send a message!");

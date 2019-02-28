@@ -12,7 +12,7 @@ const messageController = require('./api/controllers/messageController');
 
 const port = process.env.PORT || 5000;
 
-const routes = require('./api/routes/routes');
+const routes = require('./api/routes');
 
 var corsOptions = {
     allRoutes: true,
@@ -42,8 +42,8 @@ if (process.env.NODE_ENV === 'production') {
 io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('error', err => console.log(err));
-  socket.on('sent message', (msg, date, userInfo) => {
-    messageController.createMessage(msg, date, userInfo, socket);
+  socket.on('sent message', (msg, date, userInfo, roomId) => {
+    messageController.createMessage(msg, date, userInfo, roomId, socket);
   });
   socket.on('disconnect', () => {
     console.log('A user disconnected');

@@ -4,7 +4,6 @@ import { isAbsolute } from 'path';
 class MessageInput extends Component {
   constructor(props){
       super(props);
-      console.log(this.props.isLoggedIn);
   }
 
   render() {
