@@ -9,18 +9,17 @@ const Button = (props) => {
   const onClick = props.onClick;
 
   return (
-    <button className={btnClass} onClick={props.onSelectTeam}>{text}</button>
+    <button className="btn btn-primary align-text-bottom mx-auto" onClick={() => {props.onSelectTeam(props.team)}}>{text}</button>
   )
 ;}
 
 Button.propTypes = {
-  btnClass: propTypes.string,
+  team: propTypes.string.isRequired,
   text: propTypes.string.isRequired,
   onClick: propTypes.func
 }
 
 Button.defaultProps = {
-  btnClass: 'btn btn-primary',
   onClick: () => {},
 }
 

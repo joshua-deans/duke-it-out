@@ -21,10 +21,11 @@ let createMessageTable = 'CREATE TABLE IF NOT EXISTS currentMsg( \
   PRIMARY KEY(id))';
 
 let createTeamTable = 'CREATE TABLE IF NOT EXISTS team( \
+  id int(11) AUTO_INCREMENT, \
   roomId int REFERENCES chat(id) ON DELETE CASCADE, \
   userId int REFERENCES user(id) ON DELETE CASCADE, \
   teamName varchar(255) NOT NULL, \
-  PRIMARY KEY(roomId, userId))';
+  PRIMARY KEY(id))';
 
 connection.query(dropTables, function(err, results, fields) {
   if (err) {

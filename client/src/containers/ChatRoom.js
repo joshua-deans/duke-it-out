@@ -102,20 +102,20 @@ class ChatRoom extends Component {
 
   handleChangeMessage = event => this.setState({currentMsg: event.target.value});
   
-  onSelectTeam = () => {
+  onSelectTeam = (name) => {
     const payload = {
-      roomId: this.props.roomId,
-      userId: this.props.id,
-      teamName: 'bulls'
+      roomId: roomInfo.id,
+      userId: this.props.userInfo.id,
+      teamName: name
     }
 
-    console.log('user joined');
+    // console.log(payload);
     fetch("http://localhost:5000/api/team", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     }).then(res => {
-      console.log('team joined');
+      console.log(res);
     })
   }
 	
@@ -130,7 +130,7 @@ class ChatRoom extends Component {
 				<div className="d-flex justify-content-center h-100">
 					<div className="userlist">
 						<UserList team={this.state.leftTeam}/>
-          
+            <Button text={"Select"} team={roomInfo.team1} onSelectTeam={this.onSelectTeam.bind(this)} />
 					</div>
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
@@ -141,11 +141,11 @@ class ChatRoom extends Component {
 							))}
 						</div>
 						<MessageInput value={this.state.currentMsg} onSubmitEvent={this.sendMessage}
-                          onChangeValue={this.handleChangeMessage} isLoggedIn={this.props.isLoggedIn}/>
+              onChangeValue={this.handleChangeMessage} isLoggedIn={this.props.isLoggedIn}/>
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
-            <Button text={"Select"} team={'bulls'} onSelectTeam={this.onSelectTeam} />
+            <Button text={"Select"} team={roomInfo.team2} onSelectTeam={this.onSelectTeam.bind(this)} />
 					</div>
 				</div>
 			</div>
