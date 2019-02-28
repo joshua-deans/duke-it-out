@@ -46,6 +46,7 @@ exports.createMessage = function(msg, date, userInfo, roomId, socket){
     messageInfo, (error, results, fields) => {
     if (error) console.log(error);
     else {
+      socket.to("room" + roomId).emit('verified message', msg, date, userInfo);
       socket.emit('verified message', msg, date, userInfo);
     }
   });

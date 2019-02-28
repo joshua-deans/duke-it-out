@@ -40,8 +40,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
   socket.on('error', err => console.log(err));
+  socket.on('clientInfo', (userInfo, roomInfo) => {
+    console.log("User #" + userInfo.id + " connected from room #" + roomInfo.id);
+    socket.join("room" + roomInfo.id);
+  });
   socket.on('sent message', (msg, date, userInfo, roomId) => {
     messageController.createMessage(msg, date, userInfo, roomId, socket);
   });

@@ -21,6 +21,9 @@ class ChatRoom extends Component {
       roomInfo = this.props.location.state.roomInfo;
       this.getPreviousMessages();
       socket = io();
+      socket.on('connect', () => {
+        socket.emit('clientInfo', this.props.userInfo, roomInfo);
+      });
       socket.on('verified message', (msg, date, userInfo) => {
         this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
       });
