@@ -83,6 +83,8 @@ class ChatRoom extends Component {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
+    }).then(res => {
+      console.log('team joined');
     })
   }
 	
