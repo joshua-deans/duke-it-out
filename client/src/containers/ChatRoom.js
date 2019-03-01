@@ -8,6 +8,7 @@ import MessageInput from '../components/MessageInput';
 import Message from "../components/Message";
 import './ChatRoom.css';
 import moment from 'moment-timezone';
+import { HOST_STRING } from '../helper/api-config';
 
 let socket;
 let roomInfo;
@@ -61,7 +62,7 @@ class ChatRoom extends Component {
 	}
 
   getPreviousMessages() {
-	  fetch("http://localhost:5000/api/message/room/" + roomInfo.id)
+	  fetch(HOST_STRING + "/api/message/room/" + roomInfo.id)
       .then(res => {
         console.log(res);
         if (!res.ok){

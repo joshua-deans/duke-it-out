@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { HOST_STRING } from '../helper/api-config';
 
 class BrowseRoom extends Component {
   constructor(props){
     super(props);
+    console.log(process.env.NODE_ENV);
+    console.log(HOST_STRING);
     this.state = {chatRooms: []};
   }
 
@@ -12,7 +15,7 @@ class BrowseRoom extends Component {
     const setRoomState = (room) => {
       this.setState({chatRooms: [...this.state.chatRooms, room]});
     };
-    fetch("http://localhost:5000/api/chat")
+    fetch(HOST_STRING + "/api/chat", {mode: 'cors'})
       .then(res => {
         if (!res.ok){
           throw "Getting chat rooms failed";
@@ -29,10 +32,6 @@ class BrowseRoom extends Component {
         console.log(error);
       });
   };
-
-  handleRoomJoin(event){
-
-  }
 
   render() {
     return (

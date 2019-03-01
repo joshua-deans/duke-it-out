@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { HOST_STRING } from '../helper/api-config';
 
 class Login extends Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("http://localhost:5000/api/user/login",
+        fetch({ HOST_STRING } + "/api/user/login",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 credentials: 'include',
