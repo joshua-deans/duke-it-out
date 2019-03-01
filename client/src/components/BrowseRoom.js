@@ -36,8 +36,8 @@ class BrowseRoom extends Component {
 
   render() {
     return (
-      <div className="container-body container-fluid h-50 pt-4">
-        <div className="card p-4">
+      <div className="container-body container-fluid">
+        <div className="p-4">
           { createNavBar }
           <br />
           <div className="d-flex justify-content-around align-content-between flex-row flex-wrap" id="chatList">
@@ -48,7 +48,7 @@ class BrowseRoom extends Component {
                 <p className="mb-1">{room.team1} vs. {room.team2}</p>
                 <p className="mb-1">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
                 <p>Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
-                <Link to={{pathname: "/room" , state: {roomInfo: room}}}
+                <Link to={{pathname: "/room/" + room.id , state: {roomInfo: room}}}
                       id={"button-" + room.id} value={room.id} className="btn btn-success btn-sm right">Join Chat</Link>
               </div>
               ))}

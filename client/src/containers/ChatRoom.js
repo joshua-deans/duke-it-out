@@ -116,8 +116,7 @@ class ChatRoom extends Component {
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
 						<div id="msgBox" className="msgBoxStyle">
-							{/*<Message body="This is a test" date={ new Date() } />*/}
-							{this.state.messageList.map((message, index) => (
+							{this.state.messageList.slice(0).reverse().map((message, index) => (
 							<Message body={ message.body } date={ message.date } senderInfo={message.userInfo} />
 							))}
 						</div>
