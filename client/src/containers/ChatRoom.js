@@ -44,7 +44,7 @@ class ChatRoom extends Component {
         };
       } else {
         this.state = {
-          roomName: roomInfo.roomName,
+          roomName: roomInfo.name,
           leftTeam: {
             title: roomInfo.team1,
             members: ["John", "Andrew", "Bob"]

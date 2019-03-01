@@ -44,7 +44,7 @@ class BrowseRoom extends Component {
             {this.state.chatRooms.map((room) => (
               <div className="card p-3 m-2" id ={"chat-" + room.id}
               style={{minWidth: 250}}>
-                <h5>{room.roomName}</h5>
+                <h5>{room.name}</h5>
                 <p className="mb-1">{room.team1} vs. {room.team2}</p>
                 <p className="mb-1">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
                 <p>Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
