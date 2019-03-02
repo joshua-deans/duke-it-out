@@ -11,7 +11,7 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch({ HOST_STRING } + "/api/user/login",
+        fetch( HOST_STRING  + "/api/user/login",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 credentials: 'include',
