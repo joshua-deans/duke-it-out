@@ -64,10 +64,8 @@ class ChatRoom extends Component {
   getPreviousMessages() {
 	  fetch(HOST_STRING + "/api/message/room/" + roomInfo.id)
       .then(res => {
-        console.log(res);
         if (!res.ok){
           alert(res.status + "\n" + res.statusText);
-          console.log(res);
           throw "Failed to sign up";
         }
         else {
@@ -80,7 +78,6 @@ class ChatRoom extends Component {
           id: val.creator_id,
           username: val.username,
           email: val.email};
-        console.log(moment(val.timestamp));
         self.setState({messageList: [...self.state.messageList,
             {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
       })

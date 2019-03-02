@@ -28,14 +28,13 @@ class CreateRoom extends Component {
         body: JSON.stringify(reqObj)})
       .then(function(res) {
         if (!res.ok){
-          document.location.reload(true);
+          throw res;
         }
         else {
           return res;
         }
       })
       .then(function(data) {
-        console.log(data);
         window.location = "/";
       })
       .catch(function(error) {
