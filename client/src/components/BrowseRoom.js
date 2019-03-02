@@ -21,7 +21,6 @@ class BrowseRoom extends Component {
         return res.json();
       })
       .then(function(data) {
-        console.log(data);
         data.forEach(room => {
           setRoomState(room);
         });
@@ -43,7 +42,7 @@ class BrowseRoom extends Component {
           <br />
           <div className="d-flex flex-start align-content-between flex-row flex-wrap" id="chatList" style={{overflowY: "auto"}}>
             {this.state.chatRooms.map((room) => (
-              <div className="card m-2 justify-content-between " id ={"chat-" + room.id}
+              <div className="card m-2 justify-content-between " key={room.id} id ={"chat-" + room.id}
               style={{minWidth: 250}}>
                 <div className="card-header font-weight-bold rounded-top">
                   {room.name}
