@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router'
+import { HOST_STRING } from '../helper/api-config';
 
 class Signup extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Signup extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("http://localhost:5000/api/user/create",
+        fetch(HOST_STRING + "/api/user/create",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 credentials: 'include',

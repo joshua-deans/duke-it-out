@@ -4,10 +4,6 @@ import Moment from 'react-moment';
 import moment from 'moment-timezone';
 
 class Message extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         return <div className="msgContainerStyle bg-light text-dark border border-dark m-3 px-3" onSubmit={this.props.onSubmitEvent}>
             <h6 className="my-1"><strong>{this.props.senderInfo.username}</strong></h6>
