@@ -19,14 +19,12 @@ class Login extends Component {
             .then(function(res) {
                 if (!res.ok){
                     alert(res.status + "\n" + res.statusText);
-                    console.log(res);
                     throw "Failed to log in";
                 }
                 else {
                     return res
                 }
             }).then(function(data) {
-                console.log(data);
                 window.location = "/";
             }).catch(function(error) {
                 console.log(error);

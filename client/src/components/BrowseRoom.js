@@ -6,8 +6,6 @@ import { HOST_STRING } from '../helper/api-config';
 class BrowseRoom extends Component {
   constructor(props){
     super(props);
-    console.log(process.env.NODE_ENV);
-    console.log(HOST_STRING);
     this.state = {chatRooms: []};
   }
 
@@ -39,7 +37,7 @@ class BrowseRoom extends Component {
         <div className="p-4">
           { createNavBar }
           <br />
-          <div className="d-flex justify-content-around align-content-between flex-row flex-wrap" id="chatList">
+          <div className="d-flex flex-start align-content-between flex-row flex-wrap" id="chatList">
             {this.state.chatRooms.map((room) => (
               <div className="card p-3 m-2" id ={"chat-" + room.id}
               style={{minWidth: 250}}>

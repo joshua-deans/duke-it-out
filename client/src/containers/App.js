@@ -20,7 +20,7 @@ class App extends Component {
       const decodedToken = JwtDecode(token);
       this.props.onReceiveUserData(decodedToken);
     } catch (err) {
-      console.log("user not signed in");
+      console.log("User not signed in");
     }
   }
 

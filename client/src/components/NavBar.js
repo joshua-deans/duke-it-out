@@ -31,7 +31,7 @@ const NavBar = (props) => {
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                       <Link className="dropdown-item" to="#">Profile</Link>
                       <div className="dropdown-divider"/>
-                      <Link className="dropdown-item" to="/logout">Logout</Link>
+                      <Link className="dropdown-item" to="#" onClick={document.cookie = ""}>Logout</Link>
                     </div>
                   </li>
                 </ul> 

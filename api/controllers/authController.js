@@ -17,7 +17,7 @@ exports.createUser = (req, res) => {
             }
             else {
                 var user = {id: results.insertId, email: req.body.email, username: req.body.username};
-                jwt.sign(user, secret, { expiresIn: '3h' }, (err, token) => {
+                jwt.sign(user, secret, { expiresIn: '8h' }, (err, token) => {
                     if (err) res.status(400).send(err);
                     res.cookie('token', token, { httpOnly: false });
                     user.token = token;
@@ -44,7 +44,7 @@ exports.loginUser = (req, res) => {
                 }
                 else {
                     var user = {id: results[0].id, email: results[0].email, username: results[0].username};
-                    jwt.sign(user, secret, { expiresIn: '3h' }, (err, token) => {
+                    jwt.sign(user, secret, { expiresIn: '8h' }, (err, token) => {
                         if (err) console.log(err);
                         res.cookie('token', token, { httpOnly: false });
                         user.token = token;
