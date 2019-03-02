@@ -36,23 +36,21 @@ class BrowseRoom extends Component {
       borderTopRightRadius: "0"
     };
     return (
-      <div className="container-fluid" style={{overflowY: "hidden"}}>
-        <div className= "d-flex flex-column p-4 h-100">
+      <div className="container-body container-fluid my-3" style={{overflowY: "hidden"}}>
+        <div className= "jumbotron d-flex flex-column p-4 h-100">
           { createNavBar }
           <br />
-          <div className="d-flex flex-start align-content-between flex-row flex-wrap" id="chatList" style={{overflowY: "auto"}}>
+          <div className="d-flex flex-start align-content-between flex-row flex-wrap h-100" id="chatList" style={{overflowY: "auto"}}>
             {this.state.chatRooms.map((room) => (
-              <div className="card m-2 justify-content-between " key={room.id} id ={"chat-" + room.id}
-              style={{minWidth: 250}}>
-                <div className="card-header font-weight-bold rounded-top">
+              <div className="card m-2 shadow-sm justify-content-between " key={room.id} id ={"chat-" + room.id}
+              style={{minWidth: 250, height: "fit-content"}}>
+                <div className="card-header font-weight-bold rounded-top bg-white" style={{margin: 1}}>
                   {room.name}
                 </div>
-                <div className="card-body pt-4">
+                <div className="pt-3 pb-2">
                   {/*<h5 className="card-title">{room.name}</h5>*/}
-                  <div className="mt-1 mb-3">
-                    <h6 className="card-subtitle mb-2 text-muted">{room.team1}</h6>
-                    <h6 className="card-subtitle mb-2 text-muted">vs</h6>
-                    <h6 className="card-subtitle text-muted">{room.team2}</h6>
+                  <div className="mt-1 mb-2">
+                    <h6 className="card-subtitle mb-2 text-muted">{room.team1} <small>vs.</small> {room.team2}</h6>
                   </div>
                   <p className="mb-1 card-text">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
                   <p className="mb-1 card-text">Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
