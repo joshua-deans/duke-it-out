@@ -58,7 +58,7 @@ class BrowseRoom extends Component {
                   <p className="mb-1 card-text">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
                   <p className="mb-1 card-text">Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
                 </div>
-                <div class="card-footer p-0">
+                <div className="card-footer p-0">
                 <Link to={{pathname: "/room/" + room.id , state: {roomInfo: room}}} style={buttonRoundStyle}
                       id={"button-" + room.id} value={room.id} className="btn btn-success btn-block">Join Chat</Link>
                 </div>

@@ -1,6 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
+function logOut() {
+  document.cookie = "token=";
+  window.location = "/";
+}
+
 const NavBar = (props) => {
   return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{flexShrink: 0}}>
@@ -31,7 +36,7 @@ const NavBar = (props) => {
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                       <Link className="dropdown-item" to="#">Profile</Link>
                       <div className="dropdown-divider"/>
-                      <Link className="dropdown-item" to="#" onClick={document.cookie = ""}>Logout</Link>
+                      <Link className="dropdown-item" to="#" onClick={logOut}>Logout</Link>
                     </div>
                   </li>
                 </ul> 
