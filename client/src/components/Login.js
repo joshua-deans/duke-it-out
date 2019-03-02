@@ -37,7 +37,9 @@ class Login extends Component {
 
     render() {
         let loginFormStyle = {
-            width: '50vw'
+            width: '50vw',
+            maxWidth: '550px',
+            minWidth: '350px'
         };
 
         return(
