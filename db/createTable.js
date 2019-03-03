@@ -20,7 +20,7 @@ let createTeamTable = 'CREATE TABLE IF NOT EXISTS team( \
   roomId int REFERENCES chat(id) ON DELETE CASCADE, \
   userId int REFERENCES user(id) ON DELETE CASCADE, \
   teamName varchar(255) NOT NULL, \
-  PRIMARY KEY(roomId, userId)) ENGINE=InnoDB;';
+  PRIMARY KEY(id)) ENGINE=InnoDB;';
 
 let createMessageTable = 'CREATE TABLE IF NOT EXISTS message( ' +
   'id int(11) AUTO_INCREMENT, message varchar(300), timestamp date, ' +
