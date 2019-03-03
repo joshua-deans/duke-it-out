@@ -16,8 +16,8 @@ const UserList = (props) => {
 		<div>
 			<Header title={props.team.title} header_type="list"/>
 			<ul className="list-group list-group-flush" style={listStyle}>
-				{props.team.members.map(username => 
-					<User username={username}/>
+				{props.team.members.map((username, key) =>
+					<User username={username} key={key}/>
 				)}
 			</ul>
 		</div>
