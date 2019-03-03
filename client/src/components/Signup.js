@@ -13,7 +13,7 @@ class Signup extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if (this.state.password !== this.state.confirmPassword){
-          alert("The provided passwords are different!");
+          alert("Passwords don't match!");
         } else {
           fetch(HOST_STRING + "/api/user/create",
             {
