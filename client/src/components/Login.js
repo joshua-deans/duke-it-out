@@ -47,11 +47,11 @@ class Login extends Component {
             <div className="modal-body">
                 <div className="form-group">
                   <input type="email" className="form-control" id="email" name="email"
-                         placeholder="E-mail Address" onChange={this.handleChange}/>
+                         placeholder="E-mail Address" onChange={this.handleChange} required/>
                 </div>
                 <div className="form-group">
                   <input type="password" className="form-control pb-2" id="password" name="password" placeholder="Password"
-                         onChange={this.handleChange} minLength={6}/>
+                         onChange={this.handleChange} minLength={6} required/>
                 </div>
             </div>
             <div className="modal-footer">
