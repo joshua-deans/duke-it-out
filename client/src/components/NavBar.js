@@ -48,10 +48,12 @@ const NavBar = (props) => {
                 :
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/login">Login</Link>
+                        <button className="btn btn-link nav-link" data-toggle="modal" data-target="#authModal"
+                        onClick={() => document.querySelector('#loginLink').click()}>Login</button>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/signup">Signup</Link>
+                        <button className="btn btn-link nav-link" data-toggle="modal" data-target="#authModal"
+                        onClick={() => document.querySelector('#signupLink').click()}>Signup</button>
                     </li>
                 </ul>
               }

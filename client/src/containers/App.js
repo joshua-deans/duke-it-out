@@ -10,11 +10,10 @@ import BrowseRoom from '../components/BrowseRoom';
 import CreateRoom from '../components/CreateRoom';
 import ChatRoom from './ChatRoom';
 import NavBar from "../components/NavBar";
-import Login from "../components/Login";
-import Signup from "../components/Signup";
+import AuthModal from "../components/AuthModal";
 
 class App extends Component {
-  componentDidMount() {
+  componentWillMount() {
     try {
       const token = Cookies.get('token');
       const decodedToken = JwtDecode(token);
@@ -31,8 +30,11 @@ class App extends Component {
         <Route exact path="/" component={BrowseRoom}/>
         <Route path="/create" component={CreateRoom}/>
         <Route path="/room" component={ChatRoom}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/signup" component={Signup}/>
+        { this.props.loginStatus ?
+          null :
+          <AuthModal />
+        }
+
       </div>
     );
   }

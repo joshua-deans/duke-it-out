@@ -25,7 +25,7 @@ class Login extends Component {
                     return res
                 }
             }).then(function(data) {
-                window.location = "/";
+                window.location.reload(true);
             }).catch(function(error) {
                 console.log(error);
             });
@@ -37,50 +37,29 @@ class Login extends Component {
 
     render() {
         let loginFormStyle = {
-            width: '50vw',
-            maxWidth: '550px',
-            minWidth: '350px'
+            // width: '50vw',
+            // maxWidth: '550px',
+            // minWidth: '350px'
         };
 
-    return (
-      <div className="container-body mx-auto">
-        <form
-          className="card formStyle shadow"
-          style={loginFormStyle}
-          onSubmit={this.handleSubmit}
-        >
-          <h4 className="p-3">Log In</h4>
-          <div className="form-group">
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              placeholder="E-mail Address"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control pb-2"
-              id="password"
-              name="password"
-              placeholder="Password"
-              onChange={this.handleChange}
-              minLength={6}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-    );
-  }
+        return(
+          <form style={loginFormStyle} onSubmit={this.handleSubmit} >
+            <div className="modal-body">
+                <div className="form-group">
+                  <input type="email" className="form-control" id="email" name="email"
+                         placeholder="E-mail Address" onChange={this.handleChange} required/>
+                </div>
+                <div className="form-group">
+                  <input type="password" className="form-control pb-2" id="password" name="password" placeholder="Password"
+                         onChange={this.handleChange} minLength={6} required/>
+                </div>
+            </div>
+            <div className="modal-footer">
+              <button type="submit" className="btn btn-primary align-text-bottom">Submit</button>
+            </div>
+          </form>
+        )
+    }
 }
 
 export default Login;
