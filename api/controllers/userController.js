@@ -13,6 +13,14 @@ exports.getUserById = (req, res) => {
     });
 };
 
+exports.getUserByEmail = (req, res) => {
+  // Returns user data by Email
+  pool.query('SELECT * FROM User WHERE email=?', req.params.email, function (error, results, fields) {
+      if (error) res.send(null);
+      res.send(results);
+  });
+};
+
 exports.getAllUsers = (req, res) => {
     // Returns all user data (probably minus "expensive data")
     pool.query('SELECT * FROM User', function (error, results, fields) {
@@ -33,8 +41,8 @@ exports.createUser = (req, res) => {
             }
             else {
               const user = {id: results.insertId, email: req.body.email, username: req.body.username};
-              jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
-                    res.cookie('token', token, { httpOnly: true });
+              jwt.sign({user}, secret, { expiresIn: '8h' }, (err, token) => {
+                    res.cookie('token', token, { httpOnly: false });
                     user.token = token;
                     res.status(200).send(user);
                 });
@@ -59,8 +67,8 @@ exports.loginUser = (req, res) => {
                 }
                 else {
                     var user = {id: results[0].id, email: results[0].email, username: results[0].username};
-                    jwt.sign({user}, secret, { expiresIn: '3h' }, (err, token) => {
-                        res.cookie('token', token, { httpOnly: true });
+                    jwt.sign({user}, secret, { expiresIn: '8h' }, (err, token) => {
+                        res.cookie('token', token, { httpOnly: false });
                         user.token = token;
                         res.status(200).send(user);
                     });

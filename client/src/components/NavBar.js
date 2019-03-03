@@ -1,10 +1,15 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
+function logOut() {
+  document.cookie = "token=";
+  window.location = "/";
+}
+
 const NavBar = (props) => {
   return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-          <a className="navbar-brand" href="#">Duke It Out</a>
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{flexShrink: 0}}>
+          <div className="navbar-brand" style={{cursor:"default"}}>Duke It Out</div>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                   aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"/>
@@ -14,9 +19,14 @@ const NavBar = (props) => {
                   <li className="nav-item">
                       <Link className="nav-link" to="/">Home</Link>
                   </li>
+                {props.isLoggedIn ?
                   <li className="nav-item">
-                      <Link className="nav-link" to="/create">Create</Link>
+                    <Link className="nav-link" to="/create">Create</Link>
+                  </li> :
+                  <li className="nav-item">
+                    <a className="nav-link disabled">Create</a>
                   </li>
+                }
                   {/*<li className="nav-item">*/}
                       {/*<Link className="nav-link" to="/room">Room</Link>*/}
                   {/*</li>*/}
@@ -31,7 +41,7 @@ const NavBar = (props) => {
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                       <Link className="dropdown-item" to="#">Profile</Link>
                       <div className="dropdown-divider"/>
-                      <Link className="dropdown-item" to="/logout">Logout</Link>
+                      <Link className="dropdown-item" to="#" onClick={logOut}>Logout</Link>
                     </div>
                   </li>
                 </ul> 

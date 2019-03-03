@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'flatpickr/dist/themes/dark.css'
 import Flatpickr from 'react-flatpickr'
 import {connect} from "react-redux";
+import { HOST_STRING } from '../helper/api-config';
 
 class CreateRoom extends Component {
   constructor(props){
@@ -20,21 +21,20 @@ class CreateRoom extends Component {
     }
     let reqObj = this.state;
     reqObj.userId = this.props.userInfo.id;
-    fetch("http://localhost:5000/api/chat",
+    fetch(HOST_STRING + "/api/chat",
       {method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
         body: JSON.stringify(reqObj)})
       .then(function(res) {
         if (!res.ok){
-          document.location.reload(true);
+          throw res;
         }
         else {
           return res;
         }
       })
       .then(function(data) {
-        console.log(data);
         window.location = "/";
       })
       .catch(function(error) {

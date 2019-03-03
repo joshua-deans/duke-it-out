@@ -10,6 +10,7 @@ import Button from "../components/Button";
 
 import './ChatRoom.css';
 import moment from 'moment-timezone';
+import { HOST_STRING } from '../helper/api-config';
 
 let socket;
 let roomInfo;
@@ -46,7 +47,7 @@ class ChatRoom extends Component {
         };
       } else {
         this.state = {
-          roomName: roomInfo.roomName,
+          roomName: roomInfo.name,
           leftTeam: {
             title: roomInfo.team1,
             members: ["John", "Andrew", "Bob"]
@@ -63,12 +64,10 @@ class ChatRoom extends Component {
 	}
 
   getPreviousMessages() {
-	  fetch("http://localhost:5000/api/message/room/" + roomInfo.id)
+	  fetch(HOST_STRING + "/api/message/room/" + roomInfo.id)
       .then(res => {
-        console.log(res);
         if (!res.ok){
           alert(res.status + "\n" + res.statusText);
-          console.log(res);
           throw "Failed to sign up";
         }
         else {
@@ -81,7 +80,6 @@ class ChatRoom extends Component {
           id: val.creator_id,
           username: val.username,
           email: val.email};
-        console.log(moment(val.timestamp));
         self.setState({messageList: [...self.state.messageList,
             {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
       })
@@ -135,8 +133,7 @@ class ChatRoom extends Component {
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
 						<div id="msgBox" className="msgBoxStyle">
-							{/*<Message body="This is a test" date={ new Date() } />*/}
-							{this.state.messageList.map((message, index) => (
+							{this.state.messageList.slice(0).reverse().map((message, index) => (
 							<Message body={ message.body } date={ message.date } senderInfo={message.userInfo} />
 							))}
 						</div>

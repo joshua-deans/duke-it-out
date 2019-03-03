@@ -25,9 +25,10 @@ exports.getChatById = (req, res) => {
 exports.createAChat = (req, res) => {
     let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime,
       req.body.userId];
-    pool.query('INSERT INTO Chat SET roomName=?, team1=?, team2=?, startTime=?, endTime=?, creator_id=?',
+    pool.query('INSERT INTO Chat SET name=?, team1=?, team2=?, start=?, end=?, creator_id=?',
       inputs,(err, results, fields) => {
         if (err) {
+          console.log(err);
           res.status(500).send(err);
         } else {
           if (results.affectedRows === 0){

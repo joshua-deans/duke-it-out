@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { HOST_STRING } from '../helper/api-config';
 
 class BrowseRoom extends Component {
   constructor(props){
@@ -12,7 +13,7 @@ class BrowseRoom extends Component {
     const setRoomState = (room) => {
       this.setState({chatRooms: [...this.state.chatRooms, room]});
     };
-    fetch("http://localhost:5000/api/chat")
+    fetch(HOST_STRING + "/api/chat", {mode: 'cors'})
       .then(res => {
         if (!res.ok){
           throw "Getting chat rooms failed";
@@ -20,7 +21,6 @@ class BrowseRoom extends Component {
         return res.json();
       })
       .then(function(data) {
-        console.log(data);
         data.forEach(room => {
           setRoomState(room);
         });
@@ -30,26 +30,37 @@ class BrowseRoom extends Component {
       });
   };
 
-  handleRoomJoin(event){
-
-  }
-
   render() {
+    const buttonRoundStyle = {
+      borderTopLeftRadius: "0",
+      borderTopRightRadius: "0"
+    };
     return (
-      <div className="container-body container-fluid h-50 pt-4">
-        <div className="card p-4">
+      <div className="container-fluid" style={{overflowY: "hidden"}}>
+        <div className= "d-flex flex-column p-4 h-100">
           { createNavBar }
           <br />
-          <div className="d-flex justify-content-around align-content-between flex-row flex-wrap" id="chatList">
+          <div className="d-flex flex-start align-content-between flex-row flex-wrap" id="chatList" style={{overflowY: "auto"}}>
             {this.state.chatRooms.map((room) => (
-              <div className="card p-3 m-2" id ={"chat-" + room.id}
+              <div className="card m-2 justify-content-between " key={room.id} id ={"chat-" + room.id}
               style={{minWidth: 250}}>
-                <h5>{room.roomName}</h5>
-                <p className="mb-1">{room.team1} vs. {room.team2}</p>
-                <p className="mb-1">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
-                <p>Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
-                <Link to={{pathname: "/room" , state: {roomInfo: room}}}
-                      id={"button-" + room.id} value={room.id} className="btn btn-success btn-sm right">Join Chat</Link>
+                <div className="card-header font-weight-bold rounded-top">
+                  {room.name}
+                </div>
+                <div className="card-body pt-4">
+                  {/*<h5 className="card-title">{room.name}</h5>*/}
+                  <div className="mt-1 mb-3">
+                    <h6 className="card-subtitle mb-2 text-muted">{room.team1}</h6>
+                    <h6 className="card-subtitle mb-2 text-muted">vs</h6>
+                    <h6 className="card-subtitle text-muted">{room.team2}</h6>
+                  </div>
+                  <p className="mb-1 card-text">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
+                  <p className="mb-1 card-text">Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
+                </div>
+                <div className="card-footer p-0">
+                <Link to={{pathname: "/room/" + room.id , state: {roomInfo: room}}} style={buttonRoundStyle}
+                      id={"button-" + room.id} value={room.id} className="btn btn-success btn-block">Join Chat</Link>
+                </div>
               </div>
               ))}
           </div>

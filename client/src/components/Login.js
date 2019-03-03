@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { HOST_STRING } from '../helper/api-config';
 
 class Login extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("http://localhost:5000/api/user/login",
+        fetch( HOST_STRING  + "/api/user/login",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 credentials: 'include',
@@ -18,14 +19,12 @@ class Login extends Component {
             .then(function(res) {
                 if (!res.ok){
                     alert(res.status + "\n" + res.statusText);
-                    console.log(res);
                     throw "Failed to log in";
                 }
                 else {
                     return res
                 }
             }).then(function(data) {
-                console.log(data);
                 window.location = "/";
             }).catch(function(error) {
                 console.log(error);
@@ -36,10 +35,12 @@ class Login extends Component {
     this.state[event.target.name] = event.target.value;
   }
 
-  render() {
-    let loginFormStyle = {
-      width: "50vw"
-    };
+    render() {
+        let loginFormStyle = {
+            width: '50vw',
+            maxWidth: '550px',
+            minWidth: '350px'
+        };
 
     return (
       <div className="container-body mx-auto">

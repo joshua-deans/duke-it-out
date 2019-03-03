@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router'
+import { HOST_STRING } from '../helper/api-config';
 
 class Signup extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Signup extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch("http://localhost:5000/api/user/create",
+        fetch(HOST_STRING + "/api/user/create",
             {method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 credentials: 'include',
@@ -19,14 +20,12 @@ class Signup extends Component {
             .then(function(res) {
                 if (!res.ok){
                   alert(res.status + "\n" + res.statusText);
-                  console.log(res);
                   throw "Failed to sign up";
                 }
                 else {
                     return res;
                 }
             }).then(function(data) {
-                console.log(data);
                 window.location = "/";
             })
             .catch(function(error) {
@@ -40,7 +39,9 @@ class Signup extends Component {
 
     render() {
         let signupFormStyle = {
-            width: '50vw'
+            width: '50vw',
+            maxWidth: '550px',
+            minWidth: '350px'
         };
 
         return(

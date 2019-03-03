@@ -10,7 +10,6 @@ exports.getMessageById = (req, res) => {
 };
 
 exports.getMessagesByRoomId = (req, res) => {
-  console.log(req.params.id);
   pool.query('SELECT Message.creator_id, User.username, User.email, Message.message, Message.timestamp ' +
     'FROM Message INNER JOIN User ON Message.creator_id = User.id WHERE chat_id=' + req.params.id + ' ORDER BY timestamp ASC',
     (error, results, fields) => {
@@ -20,7 +19,6 @@ exports.getMessagesByRoomId = (req, res) => {
 };
 
 exports.getMessagesByUserId = (req, res) => {
-  console.log(req.params.id);
   pool.query('SELECT Message.creator_id, User.username, User.email, Message.message, Message.timestamp ' +
     'FROM Message INNER JOIN User ON Message.creator_id = User.id WHERE chat_id=' + req.params.id + ' ORDER BY timestamp ASC',
     (error, results, fields) => {
