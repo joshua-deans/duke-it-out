@@ -26,7 +26,7 @@ class Signup extends Component {
                     return res;
                 }
             }).then(function(data) {
-                window.location = "/";
+                window.location.reload(true);
             })
             .catch(function(error) {
                 console.log(error);
@@ -38,35 +38,30 @@ class Signup extends Component {
     }
 
     render() {
-        let signupFormStyle = {
-            width: '50vw',
-            maxWidth: '550px',
-            minWidth: '350px'
-        };
-
-        return(
-            <div className="container-body mx-auto">
-            <form className="card formStyle shadow" style={signupFormStyle} onSubmit={this.handleSubmit} >
-                <h4 className="p-3">Sign Up</h4>
-                <div className="form-group">
-                    <input type="text" className="form-control" id="username" name="username" placeholder="Username"
-                    onChange={this.handleChange}/>
-                </div>
-                <div className="form-group">
-                    <input type="email" className="form-control" id="email" name="email" placeholder="E-mail Address"
-                           onChange={this.handleChange}/>
-                </div>
-                <div className="form-group">
-                    <input type="password" className="form-control" id="password" name="password" placeholder="Password"
-                           onChange={this.handleChange} minLength={6}/>
-                </div>
-                {/*<div className="form-group">*/}
-                    {/*<input type="password" className="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password"*/}
-                           {/*onChange={this.handleChange}/>*/}
-                {/*</div>*/}
-                <button type="submit" className="btn btn-primary align-text-bottom mw-25 mb-3 mx-auto">Submit</button>
+      return(
+            <form onSubmit={this.handleSubmit} >
+              <div className="modal-body">
+              <div className="form-group">
+                <input type="text" className="form-control" id="username" name="username" placeholder="Username"
+                       onChange={this.handleChange}/>
+              </div>
+              <div className="form-group">
+                <input type="email" className="form-control" id="email" name="email" placeholder="E-mail Address"
+                       onChange={this.handleChange}/>
+              </div>
+              <div className="form-group">
+                <input type="password" className="form-control" id="password" name="password" placeholder="Password"
+                       onChange={this.handleChange} minLength={6}/>
+              </div>
+              {/*<div className="form-group">*/}
+              {/*<input type="password" className="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Password"*/}
+              {/*onChange={this.handleChange}/>*/}
+              {/*</div>*/}
+              </div>
+              <div className="modal-footer">
+                <button type="submit" className="btn btn-primary align-text-bottom">Submit</button>
+              </div>
             </form>
-            </div>
         )
     }
 }

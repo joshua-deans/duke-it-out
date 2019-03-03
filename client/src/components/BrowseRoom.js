@@ -37,7 +37,7 @@ class BrowseRoom extends Component {
     };
     return (
       <div className="container-body container-fluid my-3" style={{overflowY: "hidden"}}>
-        <div className= "jumbotron d-flex flex-column p-4 h-100">
+        <div className= "d-flex flex-column p-4 h-100">
           { createNavBar }
           <br />
           <div className="d-flex flex-start align-content-between flex-row flex-wrap h-100" id="chatList" style={{overflowY: "auto"}}>
