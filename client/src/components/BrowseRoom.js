@@ -44,7 +44,7 @@ class BrowseRoom extends Component {
           <div className="d-flex flex-start align-content-between flex-row flex-wrap h-100" id="chatList" style={{overflowY: "auto"}}>
             {this.state.chatRooms.map((room) => (
               <div className="card m-2 flex-fill shadow-sm justify-content-between " key={room.id} id ={"chat-" + room.id}
-              style={{minWidth: 220, maxWidth: "45%", height: "fit-content"}}>
+              style={{minWidth: 220, maxWidth: "40%", height: "fit-content"}}>
                 <div className="card-header font-weight-bold rounded-top" style={{margin: 1}}>
                   {room.name}
                 </div>
