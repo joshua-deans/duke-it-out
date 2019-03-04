@@ -3,6 +3,7 @@ import 'flatpickr/dist/themes/dark.css'
 import Flatpickr from 'react-flatpickr'
 import {connect} from "react-redux";
 import { HOST_STRING } from '../helper/api-config';
+import moment from "moment";
 
 class CreateRoom extends Component {
   constructor(props){
@@ -48,7 +49,7 @@ class CreateRoom extends Component {
 
   handleDateChange(dates){
     if (dates != null && dates.length === 2) {
-      this.setState({startTime: dates[0], endTime: dates[1]});
+      this.setState({startTime: moment(dates[0]).format(), endTime: moment(dates[1]).format()});
     }
   }
 
