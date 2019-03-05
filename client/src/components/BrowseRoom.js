@@ -22,6 +22,7 @@ class BrowseRoom extends Component {
       })
       .then(function(data) {
         data.forEach(room => {
+          console.log(room);
           setRoomState(room);
         });
       })
@@ -37,23 +38,22 @@ class BrowseRoom extends Component {
     };
     return (
       <div className="container-body container-fluid my-3" style={{overflowY: "hidden"}}>
-        <div className= "d-flex flex-column p-4 h-100">
+        <div className= "d-flex flex-column pt-3 h-100">
           { createNavBar }
           <br />
           <div className="d-flex flex-start align-content-between flex-row flex-wrap h-100" id="chatList" style={{overflowY: "auto"}}>
             {this.state.chatRooms.map((room) => (
-              <div className="card m-2 shadow-sm justify-content-between " key={room.id} id ={"chat-" + room.id}
-              style={{minWidth: 250, height: "fit-content"}}>
-                <div className="card-header font-weight-bold rounded-top bg-white" style={{margin: 1}}>
+              <div className="card m-2 flex-fill shadow-sm justify-content-between " key={room.id} id ={"chat-" + room.id}
+              style={{minWidth: 220, maxWidth: "40%", height: "fit-content"}}>
+                <div className="card-header font-weight-bold rounded-top" style={{margin: 1}}>
                   {room.name}
                 </div>
                 <div className="pt-3 pb-2">
-                  {/*<h5 className="card-title">{room.name}</h5>*/}
                   <div className="mt-1 mb-2">
-                    <h6 className="card-subtitle mb-2 text-muted">{room.team1} <small>vs.</small> {room.team2}</h6>
+                    <h6 className="card-subtitle mb-2">{room.team1} <small>vs.</small> {room.team2}</h6>
                   </div>
-                  <p className="mb-1 card-text">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
-                  <p className="mb-1 card-text">Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
+                  <p className="mb-1 card-text small text-muted">Starts: {moment(room.start).local().format("MMM D YYYY, h:mm A")}</p>
+                  <p className="mb-1 card-text small text-muted">Ends: {moment(room.end).local().format("MMM D YYYY, h:mm A")}</p>
                 </div>
                 <div className="card-footer p-0">
                 <Link to={{pathname: "/room/" + room.id , state: {roomInfo: room}}} style={buttonRoundStyle}
@@ -69,7 +69,7 @@ class BrowseRoom extends Component {
 }
 
 const createNavBar = (
-  <ul className="nav nav-pills nav-fill" id="browse-nav">
+  <ul className="nav nav-pills nav-fill px-4" id="browse-nav">
     <li className="nav-item">
       <a className="nav-link active" href="#">All</a>
     </li>
