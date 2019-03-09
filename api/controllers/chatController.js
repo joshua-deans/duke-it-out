@@ -18,7 +18,11 @@ exports.getChatById = (req, res) => {
       if (error) {
         res.status(500).send(error);
       }
-      res.status(200).send(results);
+      if (results.length < 1){
+        res.status(404).send(results);
+      } else {
+        res.status(200).send(results);
+      }
     });
 };
 

@@ -38,7 +38,7 @@ exports.getAllMessages = (req, res) => {
     });
 };
 
-exports.createMessage = function(msg, date, userInfo, roomId, socket){
+exports.createMessage = (msg, date, userInfo, roomId, socket) => {
   let messageInfo = [msg, date, userInfo.id, roomId];
   pool.query('INSERT INTO Message SET message=?, timestamp=?, creator_id=?, chat_id=?',
     messageInfo, (error, results, fields) => {
