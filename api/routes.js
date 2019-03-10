@@ -23,10 +23,11 @@ router.post('/chat', chatController.createAChat);
 //TODO: Incomplete
 router.put('/chat/:name', chatController.modifyAChat);
 
-router.get('/chat/:id/users', chatController.usersInChat);
-
 // Add user to team
 router.post('/team', teamController.addUserToTeam);
+
+// Get all users in a chat room
+router.get('/chat/:id/users', teamController.getAllUsersInChat);
 
 // User API
 // Returns user data

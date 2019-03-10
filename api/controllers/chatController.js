@@ -43,11 +43,3 @@ exports.modifyAChat = (req, res) => {
     // Updates the chat data in the database
     res.send(null);
 };
-
-exports.usersInChat = (req, res) => {
-    // Returns users in the chat
-    pool.query('SELECT * FROM User WHERE currentChat=?' + req.params.id, (error, results, fields) => {
-        if (error) res.send(null);
-        res.send(results);
-    });
-};

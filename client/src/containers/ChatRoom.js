@@ -16,6 +16,10 @@ let socket;
 let roomInfo;
 
 class ChatRoom extends Component {
+  state = {
+    messageList: []
+  }
+
 	constructor(props) {
     super(props);
     if (!this.props.location.state){
@@ -46,6 +50,7 @@ class ChatRoom extends Component {
           messageList: []
         };
       } else {
+        const teamMembers = this.getTeamMembers(roomInfo.id);
         this.state = {
           roomName: roomInfo.name,
           leftTeam: {
@@ -113,16 +118,24 @@ class ChatRoom extends Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     }).then(res => {
-      console.log(res);
+      // console.log(res);
     })
   }
+
+  getTeamMembers = roomId => {
+    fetch("http://localhost:5000/api/chat/" + roomId + "/users", {mode: "cors"})
+    .then(res => {
+      console.log(res.users);
+    })
+  }
+
 	
 	componentWillUnmount() {
 		socket.disconnect();
 	}
 
 	render () {
-		let messages = this.state.messageList;
+    let messages = this.state.messageList;
 		return (
 			<div className="container-body">
 				<div className="d-flex justify-content-center h-100">
