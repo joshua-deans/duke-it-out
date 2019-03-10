@@ -124,7 +124,7 @@ class ChatRoom extends Component {
     } else
 		return (
 			<div className="container-body">
-				<div className="d-flex justify-content-center h-100">
+				<div className="d-flex justify-content-center h-100" style={{minHeight: "500px"}}>
 					<div className="userlist">
 						{/* <Header title={this.state.leftTeam.title} header_type="list"/> */}
 						<UserList team={this.state.leftTeam}/>

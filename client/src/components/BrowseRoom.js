@@ -68,7 +68,7 @@ class BrowseRoom extends Component {
 }
 
 const createNavBar = (
-  <div className="d-flex jumbotron justify-content-between align-items-center mb-0 flex-row-reverse py-2 px-3">
+  <div className="d-flex jumbotron justify-content-between align-items-center mb-0 flex-shrink-0 flex-row-reverse py-2 px-3">
     <div className="dropdown mx-2 my-2">
       <button className="btn btn-outline-secondary dropdown-toggle float-right" data-display="static" type="button" id="dropdownMenuButton" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
