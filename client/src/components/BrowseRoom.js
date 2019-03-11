@@ -22,6 +22,7 @@ class BrowseRoom extends Component {
       })
       .then(function(data) {
         data.forEach(room => {
+          console.log(room);
           setRoomState(room);
         });
       })
@@ -36,24 +37,22 @@ class BrowseRoom extends Component {
       borderTopRightRadius: "0"
     };
     return (
-      <div className="container-body container-fluid my-3" style={{overflowY: "hidden"}}>
-        <div className= "d-flex flex-column p-4 h-100">
+      <div className="container-body" style={{overflowY: "hidden"}}>
+        <div className= "d-flex flex-column h-100">
           { createNavBar }
-          <br />
-          <div className="d-flex flex-start align-content-between flex-row flex-wrap h-100" id="chatList" style={{overflowY: "auto"}}>
+          <div className="d-flex flex-start align-content-between flex-row flex-wrap p-3 h-100" id="chatList" style={{overflowY: "auto"}}>
             {this.state.chatRooms.map((room) => (
-              <div className="card m-2 shadow-sm justify-content-between " key={room.id} id ={"chat-" + room.id}
-              style={{minWidth: 250, height: "fit-content"}}>
-                <div className="card-header font-weight-bold rounded-top bg-white" style={{margin: 1}}>
+              <div className="card m-2 flex-fill shadow-sm justify-content-between " key={room.id} id ={"chat-" + room.id}
+              style={{minWidth: 220, maxWidth: 300, height: "fit-content"}}>
+                <div className="card-header font-weight-bold rounded-top" style={{margin: 1}}>
                   {room.name}
                 </div>
-                <div className="pt-3 pb-2">
-                  {/*<h5 className="card-title">{room.name}</h5>*/}
+                <div className="pt-3 pb-2 px-2">
                   <div className="mt-1 mb-2">
-                    <h6 className="card-subtitle mb-2 text-muted">{room.team1} <small>vs.</small> {room.team2}</h6>
+                    <h6 className="card-subtitle mb-2">{room.team1} <small>vs.</small> {room.team2}</h6>
                   </div>
-                  <p className="mb-1 card-text">Starts: {moment(room.startTime).format("MMM D YYYY, h:mm A")}</p>
-                  <p className="mb-1 card-text">Ends: {moment(room.endTime).format("MMM D YYYY, h:mm A")}</p>
+                  <p className="mb-1 card-text small text-muted">Starts: {moment(room.start).local().format("MMM D YYYY, h:mm A")}</p>
+                  <p className="mb-1 card-text small text-muted">Ends: {moment(room.end).local().format("MMM D YYYY, h:mm A")}</p>
                 </div>
                 <div className="card-footer p-0">
                 <Link to={{pathname: "/room/" + room.id , state: {roomInfo: room}}} style={buttonRoundStyle}
@@ -69,33 +68,29 @@ class BrowseRoom extends Component {
 }
 
 const createNavBar = (
-  <ul className="nav nav-pills nav-fill" id="browse-nav">
-    <li className="nav-item">
-      <a className="nav-link active" href="#">All</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">Basketball</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">Soccer</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">Football</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">E-Sports</a>
-    </li>
-    <li className="nav-item dropdown">
-      <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-         aria-expanded="false">Other</a>
-      <div className="dropdown-menu">
-        <a className="dropdown-item" href="#">Baseball</a>
-        <a className="dropdown-item" href="#">Boxing</a>
-        <a className="dropdown-item" href="#">Hockey</a>
-        <a className="dropdown-item" href="#">UFC</a>
+  <div className="d-flex jumbotron justify-content-between align-items-center mb-0 flex-shrink-0 flex-row-reverse py-2 px-3">
+    <div className="dropdown mx-2 my-2">
+      <button className="btn btn-outline-secondary dropdown-toggle float-right" data-display="static" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+        Filter
+      </button>
+      <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <button className="dropdown-item" type="button">None</button>
+        <button className="dropdown-item" type="button">Basketball</button>
+        <button className="dropdown-item" type="button">Soccer</button>
+        <button className="dropdown-item" type="button">Football</button>
+        <button className="dropdown-item" type="button">E-Sports</button>
+        <button className="dropdown-item" type="button">Baseball</button>
+        <button className="dropdown-item" type="button">Boxing</button>
+        <button className="dropdown-item" type="button">Hockey</button>
+        <button className="dropdown-item" type="button">UFC</button>
       </div>
-    </li>
-  </ul>
+    </div>
+    <form onSubmit={event => event.preventDefault()} className="form-inline mx-2 my-2 my-lg-0" style={{flexWrap: "nowrap"}}>
+      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+      <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
 );
 
 export default BrowseRoom;

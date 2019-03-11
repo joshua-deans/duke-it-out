@@ -9,7 +9,7 @@ class MessageInput extends Component {
 
     if (this.props.isLoggedIn) {
       return <form className="msgInputStyle input-group" onSubmit={this.props.onSubmitEvent}>
-        <input className="form-control rounded-0" type="text" placeholder="Write a message"
+        <input className="form-control border-left-0 border-right-0 border-bottom-0 rounded-0" type="text" placeholder="Write a message"
                aria-label="Write a message" aria-describedby="send-msg-btn"
                value={this.props.value} onChange={this.props.onChangeValue} required/>
         <div className="input-group-append">

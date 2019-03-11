@@ -10,11 +10,22 @@ class Signup extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    showLoader(){
+      document.querySelector("#signupSubmit").innerHTML = "" +
+        "<span class=\"spinner-border spinner-border-sm mr-1\" role=\"status\" aria-hidden=\"true\"></span>Loading...";
+    }
+
+    hideLoader(){
+      document.querySelector("#signupSubmit").innerHTML = "Submit";
+    }
+
     handleSubmit(event) {
         event.preventDefault();
+        let hideLoader = this.hideLoader;
         if (this.state.password !== this.state.confirmPassword){
           alert("Passwords don't match!");
         } else {
+          this.showLoader();
           fetch(HOST_STRING + "/api/user/create",
             {
               method: 'POST',
@@ -33,6 +44,7 @@ class Signup extends Component {
               window.location.reload(true);
           })
             .catch(function (error) {
+              hideLoader();
               console.log(error);
             });
         }
@@ -64,7 +76,7 @@ class Signup extends Component {
               </div>
               </div>
               <div className="modal-footer">
-                <button type="submit" className="btn btn-primary align-text-bottom">Submit</button>
+                <button type="submit" id="signupSubmit" className="btn btn-primary align-text-bottom">Submit</button>
               </div>
             </form>
         )

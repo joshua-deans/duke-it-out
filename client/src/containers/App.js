@@ -29,7 +29,7 @@ class App extends Component {
         <NavBar isLoggedIn={this.props.loginStatus} userInfo={this.props.userInfo} />
         <Route exact path="/" component={BrowseRoom}/>
         <Route path="/create" component={CreateRoom}/>
-        <Route path="/room" component={ChatRoom}/>
+        <Route path="/room/:roomId" component={ChatRoom}/>
         { this.props.loginStatus ?
           null :
           <AuthModal />
