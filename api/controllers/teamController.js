@@ -15,3 +15,14 @@ exports.addUserToTeam = (req, res) => {
       }
     })
 }
+
+exports.getAllUsersInChat = (req, res) => {
+  pool.query('SELECT * FROM team WHERE roomId=' + req.params.id, (err, results, fields) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      console.log(results);
+      res.status(200).send(results);
+    }
+  })
+}
