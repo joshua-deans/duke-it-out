@@ -28,6 +28,15 @@ let createMessageTable = 'CREATE TABLE IF NOT EXISTS message( ' +
   'CONSTRAINT fk_Creator FOREIGN KEY (creator_id) REFERENCES user(id) ON DELETE SET NULL ON UPDATE CASCADE, ' +
   'CONSTRAINT fk_Chat FOREIGN KEY (chat_id) REFERENCES chat(id) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;';
 
+let createUserInChatTable = 'CREATE TABLE `user_in_chat` (' +
+  'user_id int(11) NOT NULL, ' +
+  'chat_id int(11) NOT NULL, ' +
+  'team enum(\'team1\',\'team2\') DEFAULT NULL, ' +
+  'PRIMARY KEY (user_id, chat_id ), ' +
+  'CONSTRAINT `fk_chat_id` FOREIGN KEY (`chat_id`) REFERENCES `chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, ' +
+  'CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ' +
+') ENGINE=InnoDB';
+
 connection.query(dropTables, (err, results, fields) => {
   if (err) {
     console.log(err);
@@ -53,6 +62,12 @@ connection.query(createTeamTable, (err, results, fields) => {
 });
 
 connection.query(createMessageTable, (err, results, fields) => {
+  if (err) {
+    console.log(err);
+  }
+});
+
+connection.query(createUserInChatTable, (err, results, fields) => {
   if (err) {
     console.log(err);
   }

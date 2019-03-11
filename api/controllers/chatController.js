@@ -55,3 +55,32 @@ exports.usersInChat = (req, res) => {
         res.send(results);
     });
 };
+
+exports.joinTeamInChat = (userInfo, roomInfo, teamName, socket) => {
+  let inputs = [userInfo.id, roomInfo.id, teamName];
+  pool.query('INSERT INTO user_in_chat SET chat_id=?, user_id=?, team=? ON DUPLICATE KEY UPDATE ' +
+    'chat_id=' + inputs[0] + ", user_id = " + inputs[1] + ", team= '" + inputs[2] + "'" ,
+    inputs,(err, results, fields) => {
+      if (err) console.log(err);
+      else {
+          console.log("Okay");
+      }
+    });
+};
+
+exports.leaveTeamInChat = (req, res) => {
+  let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime,
+    req.body.userId];
+  pool.query('INSERT INTO Chat SET name=?, team1=?, team2=?, start=?, end=?, creator_id=?',
+    inputs,(err, results, fields) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send(err);
+      } else {
+        if (results.affectedRows === 0){
+          res.status(400).send();
+        }
+        res.status(200).send(results);
+      }
+    });
+};

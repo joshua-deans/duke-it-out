@@ -111,21 +111,8 @@ class ChatRoom extends Component {
   handleChangeMessage = event => this.setState({currentMsg: event.target.value});
   
   onSelectTeam = (name) => {
-    const payload = {
-      roomId: roomInfo.id,
-      userId: this.props.userInfo.id,
-      teamName: name
-    }
-
-    // console.log(payload);
-    fetch("http://localhost:5000/api/team", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    }).then(res => {
-      console.log(res);
-    })
-  }
+    socket.emit('joinTeamSelf', this.props.userInfo, roomInfo, name)
+  };
 	
 	componentWillUnmount() {
 		socket.disconnect();
@@ -146,7 +133,7 @@ class ChatRoom extends Component {
 				<div className="d-flex justify-content-center h-100" style={{minHeight: "500px"}}>
 					<div className="userlist">
 						<UserList team={this.state.leftTeam}/>
-            <Button text={"Select"} team={roomInfo.team1} onSelectTeam={this.onSelectTeam.bind(this)} />
+            <Button text={"Join"} team="team1" onSelectTeam={this.onSelectTeam.bind(this)} />
 					</div>
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
@@ -160,7 +147,7 @@ class ChatRoom extends Component {
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
-            <Button text={"Select"} team={roomInfo.team2} onSelectTeam={this.onSelectTeam.bind(this)} />
+            <Button text={"Join"} team="team2" onSelectTeam={this.onSelectTeam.bind(this)} />
 					</div>
 				</div>
 			</div>

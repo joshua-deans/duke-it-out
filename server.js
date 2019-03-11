@@ -6,8 +6,8 @@ const cors = require('cors');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const mysql = require('mysql');
-const config = require('./config').dbconfig;
+
+const chatController = require('./api/controllers/chatController');
 const messageController = require('./api/controllers/messageController');
 
 const port = process.env.PORT || 5000;
@@ -39,18 +39,26 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-io.on('connection', (socket) => {
-  socket.on('error', err => console.log(err));
-  socket.on('clientInfo', (userInfo, roomInfo) => {
-    console.log("User #" + userInfo.id + " connected from room #" + roomInfo.id);
-    socket.join("room" + roomInfo.id);
-  });
-  socket.on('sent message', (msg, date, userInfo, roomId) => {
-    messageController.createMessage(msg, date, userInfo, roomId, socket);
-  });
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
+setupSockets();
 
 http.listen(port, () => console.log(`Listening on port ${port}`));
+
+function setupSockets() {
+  io.on('connection', (socket) => {
+    socket.on('error', err => console.log(err));
+    socket.on('clientInfo', (userInfo, roomInfo) => {
+      console.log("User #" + userInfo.id + " connected from room #" + roomInfo.id);
+      socket.join("room" + roomInfo.id);
+    });
+    socket.on('joinTeamSelf', (userInfo, roomInfo, teamName) => {
+      console.log("User #" + userInfo.id + " joined " + teamName + " in room #" + roomInfo.id)
+      chatController.joinTeamInChat(userInfo, roomInfo, teamName, socket);
+    });
+    socket.on('sent message', (msg, date, userInfo, roomId) => {
+      messageController.createMessage(msg, date, userInfo, roomId, socket);
+    });
+    socket.on('disconnect', () => {
+      console.log('A user disconnected');
+    });
+  });
+}
