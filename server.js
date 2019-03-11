@@ -59,9 +59,13 @@ function setupSockets() {
     socket.on('sent message', (msg, date, userInfo, roomId) => {
       messageController.createMessage(msg, date, userInfo, roomId, socket);
     });
+    socket.on('leaveTeamSelf', (userInfo, roomInfo) => {
+      chatController.leaveTeamInChat(userInfo, roomInfo, socket);
+    });
     socket.on('disconnect', () => {
       if (socket.roomInfo != null && socket.userInfo != null){
         console.log("User #" + socket.userInfo.id + " disconnected from room #" + socket.roomInfo.id);
+        chatController.leaveTeamInChat(socket.userInfo, socket.roomInfo, socket);
       } else {
         console.log('A user disconnected');
       }

@@ -50,14 +50,18 @@ exports.modifyAChat = (req, res) => {
 
 exports.usersInChat = (req, res) => {
     // Returns users in the chat
-    pool.query('SELECT * FROM User WHERE currentChat=?' + req.params.id, (error, results, fields) => {
+    pool.query('SELECT u.*, uic.team FROM User u, Chat c, user_in_chat uic WHERE u.id = uic.user_id AND c.id = uic.chat_id' +
+      ' AND c.id = ?', req.body.roomId, (error, results, fields) => {
         if (error) res.send(null);
-        res.send(results);
+        let result_arr = {};
+        result_arr.team1 = results.filter(data => data.team === "team1");
+        result_arr.team2 = results.filter(data => data.team === "team2");
+        res.send(result_arr);
     });
 };
 
 exports.joinTeamInChat = (userInfo, roomInfo, teamName, socket) => {
-  let inputs = [userInfo.id, roomInfo.id, teamName];
+  let inputs = [roomInfo.id, userInfo.id, teamName];
   pool.query('INSERT INTO user_in_chat SET chat_id=?, user_id=?, team=? ON DUPLICATE KEY UPDATE ' +
     'chat_id=' + inputs[0] + ", user_id = " + inputs[1] + ", team= '" + inputs[2] + "'" ,
     inputs,(err, results, fields) => {
@@ -69,19 +73,15 @@ exports.joinTeamInChat = (userInfo, roomInfo, teamName, socket) => {
     });
 };
 
-exports.leaveTeamInChat = (req, res) => {
-  let inputs = [req.body.roomName, req.body.team1, req.body.team2, req.body.startTime, req.body.endTime,
-    req.body.userId];
-  pool.query('INSERT INTO Chat SET name=?, team1=?, team2=?, start=?, end=?, creator_id=?',
+exports.leaveTeamInChat = (userInfo, roomInfo, socket) => {
+  let inputs = [roomInfo.id, userInfo.id];
+  pool.query('DELETE FROM user_in_chat WHERE chat_id=? AND user_id=?',
     inputs,(err, results, fields) => {
       if (err) {
         console.log(err);
-        res.status(500).send(err);
       } else {
-        if (results.affectedRows === 0){
-          res.status(400).send();
-        }
-        res.status(200).send(results);
+        socket.to("room" + roomInfo.id).emit('leaveTeamOther', userInfo);
+        socket.emit('leaveTeamSelfSuccess');
       }
     });
 };

@@ -88,6 +88,12 @@ class ChatRoom extends Component {
         this.setState({rightTeam: currState});
       }
     });
+    socket.on('leaveTeamSelfSuccess', () => {
+      this.setState({currentTeam: null});
+    });
+    socket.on('leaveOtherTeam', () => {
+      console.log("TODO");
+    });
   }
 
   getPreviousMessages(roomId) {
@@ -149,7 +155,8 @@ class ChatRoom extends Component {
 					<div className="userlist">
 						<UserList team={this.state.leftTeam}/>
             {this.state.currentTeam != null && this.state.currentTeam === "team1" ?
-              <button className="btn btn-danger align-text-bottom mx-auto my-1" >Leave</button> :
+              <button className="btn btn-danger align-text-bottom mx-auto my-1"
+                      onClick={() => socket.emit('leaveTeamSelf', this.props.userInfo, roomInfo)}>Leave</button> :
               <Button text={"Join"} team="team1" onSelectTeam={this.onSelectTeam.bind(this)}/>
             }
 					</div>
@@ -166,7 +173,8 @@ class ChatRoom extends Component {
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
             {this.state.currentTeam != null && this.state.currentTeam === "team2" ?
-              <button className="btn btn-danger align-text-bottom mx-auto my-1" >Leave</button> :
+              <button className="btn btn-danger align-text-bottom mx-auto my-1"
+                      onClick={() => socket.emit('leaveTeamSelf', this.props.userInfo, roomInfo)} >Leave</button> :
               <Button text={"Join"} team="team2" onSelectTeam={this.onSelectTeam.bind(this)}/>
             }
 					</div>
