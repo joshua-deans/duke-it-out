@@ -21,9 +21,10 @@ class ChatRoom extends Component {
     if (!this.props.location.state){
       this.state = {
         roomName: "",
-        leftTeam: {title: "", members: ["John", "Andrew", "Bob"]},
-        rightTeam: {title: "", members: ["Andy", "Kyle"]},
+        leftTeam: {title: "", members: []},
+        rightTeam: {title: "", members: []},
         currentMsg: '',
+        currentTeam: null,
         loaded: false,
         messageList: []
       };
@@ -32,16 +33,11 @@ class ChatRoom extends Component {
       roomInfo = this.props.location.state.roomInfo;
       this.getPreviousMessages(roomInfo.id);
       socket = io();
-      socket.on('connect', () => {
-        socket.emit('clientInfo', this.props.userInfo, roomInfo);
-      });
-      socket.on('verified message', (msg, date, userInfo) => {
-        this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
-      });
+      this.setupSockets(roomInfo);
       this.state = {
         roomName: roomInfo.name,
-        leftTeam: {title: roomInfo.team1, members: ["John", "Andrew", "Bob"]},
-        rightTeam: {title: roomInfo.team2, members: ["Andy", "Kyle"]},
+        leftTeam: {title: roomInfo.team1, members: []},
+        rightTeam: {title: roomInfo.team2, members: []},
         currentMsg: '',
         loaded: true,
         messageList: []
@@ -64,14 +60,33 @@ class ChatRoom extends Component {
       this.setState({roomName: data[0].name, loaded: true});
       this.getPreviousMessages(data[0].id);
       socket = io();
-      socket.on('connect', () => {
-        socket.emit('clientInfo', this.props.userInfo, data[0]);
-      });
-      socket.on('verified message', (msg, date, userInfo) => {
-        this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
-      });
+      this.setupSockets(data[0]);
     }).catch(error => {
       console.log(error);
+    });
+  }
+
+  setupSockets(roomInfo) {
+    socket.on('connect', () => {
+      socket.emit('clientInfo', this.props.userInfo, roomInfo);
+    });
+    socket.on('verified message', (msg, date, userInfo) => {
+      this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
+    });
+    socket.on('joinTeamSelfSuccess', (userInfo, teamName) => {
+      this.setState({currentTeam: teamName});
+    });
+    socket.on('joinTeamOther', (userInfo, teamName) => {
+      let currState;
+      if (teamName === "team1") {
+        currState = this.state.leftTeam;
+        currState.members.push(userInfo);
+        this.setState({leftTeam: currState});
+      } else {
+        currState = this.state.rightTeam;
+        currState.members.push(userInfo);
+        this.setState({rightTeam: currState});
+      }
     });
   }
 
@@ -119,7 +134,7 @@ class ChatRoom extends Component {
 	}
 
 	render () {
-		let messages = this.state.messageList;
+    const reverse = this.state.currentTeam === "team2" ? ' flex-row-reverse' : '';
     if (!this.state.loaded) {
       return (<div className="d-flex flex-column align-middle flex-grow-1 justify-content-center">
         <div>
@@ -130,10 +145,13 @@ class ChatRoom extends Component {
     } else
 		return (
 			<div className="container-body">
-				<div className="d-flex justify-content-center h-100" style={{minHeight: "500px"}}>
+				<div className={"d-flex  justify-content-center h-100" + reverse} style={{minHeight: "500px"}}>
 					<div className="userlist">
 						<UserList team={this.state.leftTeam}/>
-            <Button text={"Join"} team="team1" onSelectTeam={this.onSelectTeam.bind(this)} />
+            {this.state.currentTeam != null && this.state.currentTeam === "team1" ?
+              <button className="btn btn-danger align-text-bottom mx-auto my-1" >Leave</button> :
+              <Button text={"Join"} team="team1" onSelectTeam={this.onSelectTeam.bind(this)}/>
+            }
 					</div>
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
@@ -147,7 +165,10 @@ class ChatRoom extends Component {
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
-            <Button text={"Join"} team="team2" onSelectTeam={this.onSelectTeam.bind(this)} />
+            {this.state.currentTeam != null && this.state.currentTeam === "team2" ?
+              <button className="btn btn-danger align-text-bottom mx-auto my-1" >Leave</button> :
+              <Button text={"Join"} team="team2" onSelectTeam={this.onSelectTeam.bind(this)}/>
+            }
 					</div>
 				</div>
 			</div>

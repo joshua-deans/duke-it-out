@@ -48,6 +48,8 @@ function setupSockets() {
     socket.on('error', err => console.log(err));
     socket.on('clientInfo', (userInfo, roomInfo) => {
       console.log("User #" + userInfo.id + " connected from room #" + roomInfo.id);
+      socket.userInfo = userInfo;
+      socket.roomInfo = roomInfo;
       socket.join("room" + roomInfo.id);
     });
     socket.on('joinTeamSelf', (userInfo, roomInfo, teamName) => {
@@ -58,7 +60,11 @@ function setupSockets() {
       messageController.createMessage(msg, date, userInfo, roomId, socket);
     });
     socket.on('disconnect', () => {
-      console.log('A user disconnected');
+      if (socket.roomInfo != null && socket.userInfo != null){
+        console.log("User #" + socket.userInfo.id + " disconnected from room #" + socket.roomInfo.id);
+      } else {
+        console.log('A user disconnected');
+      }
     });
   });
 }

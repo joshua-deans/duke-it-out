@@ -63,7 +63,8 @@ exports.joinTeamInChat = (userInfo, roomInfo, teamName, socket) => {
     inputs,(err, results, fields) => {
       if (err) console.log(err);
       else {
-          console.log("Okay");
+          socket.to("room" + roomInfo.id).emit('joinTeamOther', userInfo, teamName);
+          socket.emit('joinTeamSelfSuccess', userInfo, teamName);
       }
     });
 };
