@@ -27,7 +27,7 @@ class AuthModal extends Component {
     return (
       <div className="modal fade" id="authModal" tabIndex="-1" role="dialog" aria-labelledby="authModalLabel"
            aria-hidden="true">
-        <div className="modal-dialog" role="document" style={{top: "18%", maxWidth: "380px"}}>
+        <div className="modal-dialog" role="document" style={{top: "13%", maxWidth: "380px"}}>
           <div className="modal-content">
             <div className="modal-header">
               <ul className="nav nav-pills">

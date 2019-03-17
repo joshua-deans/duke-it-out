@@ -13,6 +13,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
     "popper.js": "^1.14.7",
+    "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-dev-utils": "^7.0.2",
     "react-dom": "^16.7.0",

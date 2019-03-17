@@ -11,7 +11,7 @@
 .userlist {
     border: 1px solid #d9d9d9;
     width:15%;
-    min-width: 125px;
+    min-width: 150px;
     display:flex;
     max-height: 100%;
     flex-direction: column;

@@ -10,7 +10,7 @@ exports.getMessageById = (req, res) => {
 };
 
 exports.getMessagesByRoomId = (req, res) => {
-  pool.query('SELECT Message.creator_id, User.username, User.email, Message.message, Message.timestamp ' +
+  pool.query('SELECT Message.creator_id, User.username, User.email, Message.message, Message.timestamp, Message.team ' +
     'FROM Message INNER JOIN User ON Message.creator_id = User.id WHERE chat_id=' + req.params.id + ' ORDER BY timestamp ASC',
     (error, results, fields) => {
     if (error) res.status(500).end();
@@ -38,14 +38,14 @@ exports.getAllMessages = (req, res) => {
     });
 };
 
-exports.createMessage = (msg, date, userInfo, roomId, socket) => {
-  let messageInfo = [msg, date, userInfo.id, roomId];
-  pool.query('INSERT INTO Message SET message=?, timestamp=?, creator_id=?, chat_id=?',
+exports.createMessage = (msg, date, userInfo, roomId, team, socket) => {
+  let messageInfo = [msg, date, userInfo.id, roomId, team];
+  pool.query('INSERT INTO Message SET message=?, timestamp=?, creator_id=?, chat_id=?, team=?',
     messageInfo, (error, results, fields) => {
     if (error) console.log(error);
     else {
-      socket.to("room" + roomId).emit('verified message', msg, date, userInfo);
-      socket.emit('verified message', msg, date, userInfo);
+      socket.to("room" + roomId).emit('verified message', msg, date, userInfo, team);
+      socket.emit('verified message', msg, date, userInfo, team);
     }
   });
 };

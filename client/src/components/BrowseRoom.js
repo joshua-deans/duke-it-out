@@ -22,7 +22,6 @@ class BrowseRoom extends Component {
       })
       .then(function(data) {
         data.forEach(room => {
-          console.log(room);
           setRoomState(room);
         });
       })

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { HOST_STRING } from '../helper/api-config';
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {'email': '', 'password': ''};
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = { email: "", password: "" };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   showLoader(){
     document.querySelector("#loginSubmit").innerHTML = "" +
@@ -43,9 +43,9 @@ class Login extends Component {
     });
   }
 
-    handleChange(event) {
-        this.state[event.target.name] = event.target.value;
-    }
+  handleChange(event) {
+    this.state[event.target.name] = event.target.value;
+  }
 
     render() {
         let loginFormStyle = {
