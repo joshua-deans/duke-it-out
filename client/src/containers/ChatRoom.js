@@ -40,6 +40,7 @@ class ChatRoom extends Component {
         rightTeam: {title: roomInfo.team2, members: []},
         currentMsg: '',
         loaded: true,
+        currentTeam: null,
         messageList: []
       };
     }
@@ -70,8 +71,8 @@ class ChatRoom extends Component {
     socket.on('connect', () => {
       socket.emit('clientInfo', this.props.userInfo, roomInfo);
     });
-    socket.on('verified message', (msg, date, userInfo) => {
-      this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo}]});
+    socket.on('verified message', (msg, date, userInfo, team) => {
+      this.setState({messageList: [...this.state.messageList, {body: msg, date: date, userInfo: userInfo, team: team}]});
     });
     socket.on('joinTeamSelfSuccess', (userInfo, teamName) => {
       this.setState({currentTeam: teamName});
@@ -114,15 +115,15 @@ class ChatRoom extends Component {
           username: val.username,
           email: val.email};
         self.setState({messageList: [...self.state.messageList,
-            {body: val.message, date: val.timestamp, userInfo: currUserInfo}]});
+            {body: val.message, date: val.timestamp, userInfo: currUserInfo, team: val.team}]});
       })
     })
 	}
 
   sendMessage = (event) => {
 		event.preventDefault();
-		if (this.props.isLoggedIn) {
-      socket.emit('sent message', this.state.currentMsg, new moment().format(), this.props.userInfo, roomInfo.id);
+		if (this.props.isLoggedIn && this.state.currentTeam != null) {
+      socket.emit('sent message', this.state.currentMsg, new moment().format(), this.props.userInfo, roomInfo.id, this.state.currentTeam);
       this.setState({currentMsg: ''});
     } else {
 		  alert("You must be logged in to send a message!");
@@ -154,35 +155,42 @@ class ChatRoom extends Component {
 				<div className={"d-flex  justify-content-center h-100" + reverse} style={{minHeight: "500px"}}>
 					<div className="userlist">
 						<UserList team={this.state.leftTeam}/>
-            {this.state.currentTeam != null && this.state.currentTeam === "team1" ?
-              <button className="btn btn-danger align-text-bottom mx-auto my-1"
-                      onClick={() => socket.emit('leaveTeamSelf', this.props.userInfo, roomInfo)}>Leave</button> :
-              <Button text={"Join"} team="team1" onSelectTeam={this.onSelectTeam.bind(this)}/>
-            }
+            {this.returnSideButton("team1")}
 					</div>
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
 						<div id="msgBox" className="msgBoxStyle">
 							{this.state.messageList.slice(0).reverse().map((message, index) => (
-							<Message body={ message.body } date={ message.date } senderInfo={message.userInfo} />
+							<Message body={ message.body } date={ message.date } senderInfo={message.userInfo} team={message.team}
+                       currentTeam={this.state.currentTeam}/>
 							))}
 						</div>
 						<MessageInput value={this.state.currentMsg} onSubmitEvent={this.sendMessage}
-              onChangeValue={this.handleChangeMessage} isLoggedIn={this.props.isLoggedIn}/>
+              onChangeValue={this.handleChangeMessage} isLoggedIn={this.props.isLoggedIn} team={this.state.currentTeam}/>
 					</div>
 					<div className="userlist">
 						<UserList team={this.state.rightTeam}/>
-            {this.state.currentTeam != null && this.state.currentTeam === "team2" ?
-              <button className="btn btn-danger align-text-bottom mx-auto my-1"
-                      onClick={() => socket.emit('leaveTeamSelf', this.props.userInfo, roomInfo)} >Leave</button> :
-              <Button text={"Join"} team="team2" onSelectTeam={this.onSelectTeam.bind(this)}/>
-            }
+            {this.returnSideButton("team2")}
 					</div>
 				</div>
 			</div>
 		)
 	}
+
+  returnSideButton = (teamString) => {
+    if (!this.props.isLoggedIn){
+      return null;
+    }
+    else if (this.state.currentTeam != null && this.state.currentTeam === teamString) {
+      return (<button className="btn btn-danger btn-block align-text-bottom mx-auto mb-1 rounded-0"
+                      onClick={() => socket.emit('leaveTeamSelf', this.props.userInfo, roomInfo)}>Leave</button>)
+    } else {
+      return (<Button text={"Join"} team={teamString} onSelectTeam={this.onSelectTeam.bind(this)}/>)
+    }
+  };
 }
+
+
 
 const mapStateToProps = state => {
   return {

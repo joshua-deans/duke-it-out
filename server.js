@@ -56,8 +56,8 @@ function setupSockets() {
       console.log("User #" + userInfo.id + " joined " + teamName + " in room #" + roomInfo.id)
       chatController.joinTeamInChat(userInfo, roomInfo, teamName, socket);
     });
-    socket.on('sent message', (msg, date, userInfo, roomId) => {
-      messageController.createMessage(msg, date, userInfo, roomId, socket);
+    socket.on('sent message', (msg, date, userInfo, roomId, team) => {
+      messageController.createMessage(msg, date, userInfo, roomId, team, socket);
     });
     socket.on('leaveTeamSelf', (userInfo, roomInfo) => {
       chatController.leaveTeamInChat(userInfo, roomInfo, socket);

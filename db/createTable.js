@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const config = require('../config').dbconfig;
 const connection = mysql.createConnection(config);
 
-let dropTables = 'DROP TABLE IF EXISTS replyto, message, team, chat, user';
+let dropTables = 'DROP TABLE IF EXISTS user_in_chat, chat, user, replyto, message, team';
 
 let createUserTable = 'CREATE TABLE IF NOT EXISTS user( \
   id int(11) AUTO_INCREMENT, username varchar(30), email varchar(30), \
@@ -23,8 +23,8 @@ let createTeamTable = 'CREATE TABLE IF NOT EXISTS team( \
   PRIMARY KEY(id)) ENGINE=InnoDB;';
 
 let createMessageTable = 'CREATE TABLE IF NOT EXISTS message( ' +
-  'id int(11) AUTO_INCREMENT, message varchar(300), timestamp datetime, ' +
-  'creator_id int(11), chat_id int(11), PRIMARY KEY(id), ' +
+  'id int(11) AUTO_INCREMENT, message varchar(1000), timestamp datetime, ' +
+  'creator_id int(11), chat_id int(11), team enum(\'team1\',\'team2\') NOT NULL, PRIMARY KEY(id), ' +
   'CONSTRAINT fk_Creator FOREIGN KEY (creator_id) REFERENCES user(id) ON DELETE SET NULL ON UPDATE CASCADE, ' +
   'CONSTRAINT fk_Chat FOREIGN KEY (chat_id) REFERENCES chat(id) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;';
 
