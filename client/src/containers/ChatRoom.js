@@ -108,12 +108,9 @@ class ChatRoom extends Component {
           return res.json();
         }
     }).then(data => {
-      var self = this;
+      let self = this;
       data.forEach(val => {
-        var currUserInfo = {
-          id: val.creator_id,
-          username: val.username,
-          email: val.email};
+        let currUserInfo = {id: val.creator_id, username: val.username, email: val.email};
         self.setState({messageList: [...self.state.messageList,
             {body: val.message, date: val.timestamp, userInfo: currUserInfo, team: val.team}]});
       })

@@ -10,7 +10,6 @@ class Message extends Component {
     }
 
     render() {
-      console.log(this.props);
       if ((this.props.currentTeam == null && this.props.team === "team1") || this.props.team === this.props.currentTeam){
         return <div className="msgContainerStyle bg-light text-dark border border-dark my-2 mx-3 px-3 shadow-sm mr-auto" onSubmit={this.props.onSubmitEvent}>
             <h6 className="my-1 msgBodyStyle"><strong>{this.props.senderInfo.username}</strong></h6>
