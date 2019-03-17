@@ -23,7 +23,7 @@ class MessageInput extends Component {
       if (!this.props.isLoggedIn) {messageInputText = "You must be logged in to send a message!"}
       else {messageInputText = "Join a team to send a message!"}
       return <form className="msgInputStyle input-group border-0" onSubmit={this.props.onSubmitEvent}>
-        <textarea className="form-control border-left-0 border-right-0 border-bottom-0 rounded-0" type="text" placeholder={messageInputText}
+        <input className="form-control border-left-0 border-right-0 border-bottom-0 rounded-0" type="text" placeholder={messageInputText}
                aria-label="Write a message" aria-describedby="send-msg-btn" style={{lineHeight: "20px", resize: "none"}}
                value={this.props.value} onChange={this.props.onChangeValue} disabled />
         <div className="input-group-append">

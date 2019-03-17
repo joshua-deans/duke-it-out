@@ -31,6 +31,7 @@ class ChatRoom extends Component {
       this.getRoomInfo();
     } else {
       roomInfo = this.props.location.state.roomInfo;
+      this.updateUsers(roomInfo.id);
       this.getPreviousMessages(roomInfo.id);
       socket = io();
       this.setupSockets(roomInfo);
@@ -59,6 +60,7 @@ class ChatRoom extends Component {
       this.state.leftTeam.title = data[0].team1;
       this.state.rightTeam.title = data[0].team2;
       this.setState({roomName: data[0].name, loaded: true});
+      this.updateUsers(data[0].id);
       this.getPreviousMessages(data[0].id);
       socket = io();
       this.setupSockets(data[0]);
@@ -102,7 +104,7 @@ class ChatRoom extends Component {
       .then(res => {
         if (!res.ok){
           alert(res.status + "\n" + res.statusText);
-          throw "Failed to sign up";
+          throw "Failed to get messages";
         }
         else {
           return res.json();
@@ -142,17 +144,21 @@ class ChatRoom extends Component {
     if (!this.state.loaded) {
       return (<div className="d-flex flex-column align-middle flex-grow-1 justify-content-center">
         <div>
-        <span style={{width: "2rem", height: "2rem"}} class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
+        <span style={{
+              width: "2rem",
+              height: "2rem"
+            }} className="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"/>
         <span style={{fontSize: "2rem"}}>Loading...</span>
         </div>
       </div>);
     } else
 		return (
 			<div className="container-body">
-				<div className={"d-flex  justify-content-center h-100" + reverse} style={{minHeight: "500px"}}>
+				<div className={"d-flex justify-content-center h-100" + reverse} style={{minHeight: "500px"}}>
 					<div className="userlist">
-						<UserList team={this.state.leftTeam}/>
+            <Header title={this.state.leftTeam.title} header_type="list"/>
             {this.returnSideButton("team1")}
+            <UserList team={this.state.leftTeam}/>
 					</div>
 					<div className="chatbox">
 						<Header title={this.state.roomName} header_type="chat"/>
@@ -166,8 +172,9 @@ class ChatRoom extends Component {
               onChangeValue={this.handleChangeMessage} isLoggedIn={this.props.isLoggedIn} team={this.state.currentTeam}/>
 					</div>
 					<div className="userlist">
-						<UserList team={this.state.rightTeam}/>
+            <Header title={this.state.rightTeam.title} header_type="list"/>
             {this.returnSideButton("team2")}
+            <UserList team={this.state.rightTeam}/>
 					</div>
 				</div>
 			</div>
@@ -185,6 +192,27 @@ class ChatRoom extends Component {
       return (<Button text={"Join"} team={teamString} onSelectTeam={this.onSelectTeam.bind(this)}/>)
     }
   };
+
+  updateUsers(roomId) {
+    fetch(HOST_STRING + "/api/chat/" + roomId + "/users")
+      .then(res => {
+        if (!res.ok){
+          alert(res.status + "\n" + res.statusText);
+          throw "Failed to get users";
+        }
+        else {
+          return res.json();
+        }
+      }).then(data => {
+      let leftTeamUpdate = this.state.leftTeam;
+      let rightTeamUpdate = this.state.rightTeam;
+      leftTeamUpdate.members.concat(data.team1);
+      rightTeamUpdate.members.concat(data.team2);
+      console.log(leftTeamUpdate);
+      console.log(rightTeamUpdate);
+      this.setState({leftTeam: leftTeamUpdate, rightTeam: rightTeamUpdate});
+    }).catch(err => console.log(err));
+  }
 }
 
 

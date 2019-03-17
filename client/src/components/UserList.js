@@ -14,7 +14,6 @@ const UserList = (props) => {
   };
 	return (
 		<div>
-			<Header title={props.team.title} header_type="list"/>
 			<ul className="list-group list-group-flush" style={listStyle}>
 				{props.team.members.map((userInfo, key) =>
 					<User username={userInfo.username} key={key}/>

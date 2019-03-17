@@ -17,6 +17,9 @@ router.get('/chat', chatController.getAllChats);
 // Returns chat data by ID
 router.get('/chat/:id', chatController.getChatById);
 
+// Gets users from in chat by ID
+router.get('/chat/:id/users', chatController.usersInChat);
+
 // Creates a chat
 router.post('/chat', chatController.createAChat);
 

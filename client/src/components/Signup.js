@@ -12,7 +12,7 @@ class Signup extends Component {
 
     showLoader(){
       document.querySelector("#signupSubmit").innerHTML = "" +
-        "<span class=\"spinner-border spinner-border-sm mr-1\" role=\"status\" aria-hidden=\"true\"></span>Loading...";
+        "<span className=\"spinner-border spinner-border-sm mr-1\" role=\"status\" aria-hidden=\"true\"/>Loading...";
     }
 
     hideLoader(){

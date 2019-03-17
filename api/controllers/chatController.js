@@ -49,9 +49,8 @@ exports.modifyAChat = (req, res) => {
 };
 
 exports.usersInChat = (req, res) => {
-    // Returns users in the chat
     pool.query('SELECT u.*, uic.team FROM User u, Chat c, user_in_chat uic WHERE u.id = uic.user_id AND c.id = uic.chat_id' +
-      ' AND c.id = ?', req.body.roomId, (error, results, fields) => {
+      ' AND c.id = ?', req.params.id, (error, results, fields) => {
         if (error) res.send(null);
         let result_arr = {};
         result_arr.team1 = results.filter(data => data.team === "team1");

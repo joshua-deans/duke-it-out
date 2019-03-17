@@ -9,7 +9,7 @@ const Button = (props) => {
   const onClick = props.onClick;
 
   return (
-    <button className="btn btn-primary btn-block align-text-bottom mx-auto mb-1 rounded-0" onClick={() => {props.onSelectTeam(props.team)}}>{text}</button>
+    <button className="btn btn-success btn-block align-text-bottom mx-auto mb-1 rounded-0" onClick={() => {props.onSelectTeam(props.team)}}>{text}</button>
   )
 ;}
 
