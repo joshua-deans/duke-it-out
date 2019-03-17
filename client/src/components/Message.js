@@ -5,10 +5,6 @@ import moment from 'moment-timezone';
 import Linkify from 'linkifyjs/react';
 
 class Message extends Component {
-    constructor(props){
-      super(props);
-    }
-
     render() {
       if ((this.props.currentTeam == null && this.props.team === "team1") || this.props.team === this.props.currentTeam){
         return <div className="msgContainerStyle bg-light text-dark border border-dark my-2 mx-3 px-3 shadow-sm mr-auto" onSubmit={this.props.onSubmitEvent}>
