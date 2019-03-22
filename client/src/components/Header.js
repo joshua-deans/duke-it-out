@@ -32,7 +32,7 @@ const header = (props) => {
 	}
 
 	return (
-		<h4 style={headerStyle}>{props.title}</h4>
+		<h5 style={headerStyle}>{props.title}</h5>
 	)
 }
 

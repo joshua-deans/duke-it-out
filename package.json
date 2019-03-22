@@ -7,7 +7,8 @@
     "client": "cd client && yarn start",
     "server": "node server.js",
     "build-client": "cd client && npm run build && cd ..",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "setup-db": "node ./db/createTable"
   },
   "engines": {
     "node": ">=10.0.0",
@@ -17,23 +18,18 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.2.1",
-    "cookie-parser": "^1.4.3",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.4.0",
     "mysql": "^2.16.0",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "^2.1.3",
-    "reactstrap": "^7.1.0",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "concurrently": "^4.1.0"
   }
 }

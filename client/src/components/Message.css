@@ -13,5 +13,7 @@
 }
 
 .msgBodyStyle {
-    text-align: left;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
